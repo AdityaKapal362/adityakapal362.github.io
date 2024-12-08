@@ -109,6 +109,7 @@ footer {
   display: flex;
   align-items: center;
   gap: 10px;
+  max-height: 250px;
 }
 
 .kapaltitleartists {
