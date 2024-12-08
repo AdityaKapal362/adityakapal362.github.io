@@ -119,6 +119,7 @@ footer {
   word-break: break-word;
   flex-shrink: 0;
   color: black; /* Ensure the kapaltitleartists text color is visible */
+  background: none;
 }
 
 .scroll-container {
@@ -152,7 +153,41 @@ footer {
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
   background-color: white;
-  background-image: url('test.jpeg'); /* Add your image path here */
+  background-image: url('/mine/banner/favsong1.jpg'); /* Add your image path here */
+  background-size: cover; /* Ensure the background image covers the card area */
+  background-position: center; /* Centers the background image */
+  background-repeat: no-repeat; /* Prevent background image from repeating */
+}
+
+.card2 {
+  position: relative;
+  width: 40vw;
+  height: calc(40vw * 1.25);
+  margin-top: 10vw; /* Add 10% margin at the top */
+  margin-bottom: 10vw; /* Add 10% margin at the bottom */
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  background-color: white;
+  background-image: url('/mine/banner/favsong2.jpg'); /* Add your image path here */
+  background-size: cover; /* Ensure the background image covers the card area */
+  background-position: center; /* Centers the background image */
+  background-repeat: no-repeat; /* Prevent background image from repeating */
+}
+
+.card3 {
+  position: relative;
+  width: 40vw;
+  height: calc(40vw * 1.25);
+  margin-top: 10vw; /* Add 10% margin at the top */
+  margin-bottom: 10vw; /* Add 10% margin at the bottom */
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  background-color: white;
+  background-image: url('/mine/banner/favsong3.jpg'); /* Add your image path here */
   background-size: cover; /* Ensure the background image covers the card area */
   background-position: center; /* Centers the background image */
   background-repeat: no-repeat; /* Prevent background image from repeating */
