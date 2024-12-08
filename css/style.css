@@ -10,22 +10,23 @@ body {
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;
   color: #333;
+  text-align: center; /* Center all text */
 }
 
 /* Header Section */
 .hero {
-  background: url('/mine/anyasleep.jpeg') no-repeat center center/cover;
-  height: 300px;
+  background: url('background-image.jpg') no-repeat center center/cover; /* Crop center */
+  height: 100vh; /* Full screen height */
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: white;
 }
 
 .hero .welcome-text h1 {
   font-size: 2.5rem;
   font-weight: 700;
+  color: white; /* Set text color to white */
 }
 
 /* My Bio Section */
@@ -36,10 +37,11 @@ body {
 }
 
 .mybio .profile-image img {
-  width: 120px;
-  height: 120px;
+  width: 170px; /* Smaller size */
+  height: 170px; /* Smaller size */
   border-radius: 50%;
-  margin-bottom: 15px;
+  margin: 0 auto 15px auto;
+  display: block; /* Center the image */
 }
 
 .mybio h2 {
@@ -63,7 +65,6 @@ body {
 
 /* Introduction Section */
 .introduction {
-  text-align: center;
   padding: 20px 10px;
   color: gray;
   font-size: 1rem;
@@ -71,7 +72,6 @@ body {
 
 /* Social Media Section */
 .social-media {
-  text-align: center;
   margin: 20px 0;
 }
 
@@ -88,9 +88,8 @@ body {
 
 /* Footer */
 footer {
-  text-align: center;
   padding: 10px 0;
-  background: #f4f4f4;
-  font-size: 0.9rem;
+  font-size: 0.7rem; /* Smaller copyright text */
   color: #666;
+  background: none; /* Remove gray background */
 }
