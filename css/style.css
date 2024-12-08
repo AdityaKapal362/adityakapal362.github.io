@@ -15,7 +15,7 @@ body {
 
 /* Header Section */
 .hero {
-  background: url('background-image.jpg') no-repeat center center/cover; /* Crop center */
+  background: url('/mine/anyasleep.jpeg') no-repeat center center/cover; /* Crop center */
   height: 100vh; /* Full screen height */
   display: flex;
   justify-content: center;
