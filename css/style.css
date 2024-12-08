@@ -86,9 +86,9 @@ body {
 }
 
 .social-media a img {
-  width: 40px;
+  width: 70px;
   height: 40px;
-  margin: 0 10px;
+  margin: 0 7px;
   transition: transform 0.3s ease;
 }
 
