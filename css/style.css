@@ -109,7 +109,7 @@ footer {
   display: flex;
   align-items: center;
   gap: 10px;
-  max-height: 250px;
+  max-height: 190px;
 }
 
 .kapaltitleartists {
@@ -128,6 +128,7 @@ footer {
 }
 
 .scroll-container {
+  max-height:190px;
   position: relative;
   display: flex;
   flex-grow: 1;
