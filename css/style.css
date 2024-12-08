@@ -25,8 +25,8 @@ body {
 }
 
 .hero .welcome-image img {
-  max-width: 20%; /* Limit the image width */
-  max-height: 20%; /* Limit the image height */
+  max-width: 30%; /* Limit the image width */
+  max-height: 30%; /* Limit the image height */
   margin: 0 auto;
   display: block;
   position: relative;
@@ -65,7 +65,7 @@ body {
 
 .mybio .campus {
   font-family: 'Liberation', sans-serif; /* Change to Liberation font */
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: black;
 }
 
