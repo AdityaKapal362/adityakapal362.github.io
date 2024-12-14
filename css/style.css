@@ -39,12 +39,12 @@ body {
   bottom: 0;
   width: 100%;
   height: 150px;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, white 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, black 100%);
 }
 
 /* My Bio Section */
 .mybio {
-  background: white;
+  background: black;
   text-align: center;
   padding: 20px 10px;
 }
@@ -60,13 +60,13 @@ body {
 .mybio h2 {
   font-size: 1.8rem;
   font-weight: 700;
-  color: black;
+  color: white;
 }
 
 .mybio .campus {
   font-family: 'Liberation', sans-serif; /* Change to Liberation font */
   font-size: 0.9rem;
-  color: black;
+  color: white;
 }
 
 /* Divider */
