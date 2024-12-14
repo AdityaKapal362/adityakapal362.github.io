@@ -88,6 +88,16 @@ body {
   width: 90%;
 }
 
+.soft-purple-link {
+  color: #a78bfa; /* Soft purple */
+  text-decoration: none; /* Remove underline */
+  transition: color 0.3s ease; /* Smooth transition for hover */
+}
+
+.soft-purple-link:hover {
+  color: #c4b5fd; /* Slightly lighter purple on hover */
+}
+
 /* Social Media Section */
 .social-media {
   margin: 20px 0;
