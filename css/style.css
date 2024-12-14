@@ -167,7 +167,7 @@ body {
 .project-badges {
   display: flex; /* Place badges horizontally */
   /*justify-content: center; Center align the badges */
-  gap: 15px; /* Space between badges */
+  gap: 8px; /* Space between badges */
   margin-top: 15px; /* Add space above the badges */
 }
 
