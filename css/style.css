@@ -79,13 +79,13 @@ body {
 
 /* Introduction Section */
 .introduction {
-  padding: 20px 10px;
+  padding: 20px 15px;
   color: #dddddd; /* Lighter gray for readability */
   font-size: 1rem;
   background: #1e1e1e; /* Match bio section */
   border-radius: 8px;
   margin: 20px auto;
-  width: 90%;
+  width: 85%;
 }
 
 /* Social Media Section */
@@ -185,11 +185,4 @@ footer {
   font-size: 0.7rem;
   color: #666;
   background: none;
-}
-
-/* Responsive Padding for Mobile */
-@media (max-width: 1080px) {
-  .project-list {
-    padding: 0 15px; /* Add padding for the container */
-  }
 }
