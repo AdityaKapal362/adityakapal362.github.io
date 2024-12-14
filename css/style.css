@@ -137,9 +137,10 @@ body {
 }
 
 .project-thumbnail {
-  width: 100%; /* Full-width thumbnail */
-  height: auto; /* Maintain aspect ratio */
-  border-radius: 6px;
+  width: 100%; /* Full width */
+  max-height: 170px; /* Limit height to 170px */
+  object-fit: cover; /* Ensure proper scaling and cropping */
+  border-radius: 6px; /* Rounded corners */
   margin-bottom: 10px;
 }
 
