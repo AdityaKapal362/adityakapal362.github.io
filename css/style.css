@@ -165,16 +165,16 @@ body {
 /* Project Badges */
 .project-badges {
   display: flex; /* Place badges horizontally */
-  justify-content: center; /* Center align the badges */
+  /*justify-content: center; Center align the badges */
   gap: 15px; /* Space between badges */
   margin-top: 15px; /* Add space above the badges */
 }
 
 .project-badges .badge {
-  width: 60px; /* Badge width */
-  height: auto; /* Maintain aspect ratio */
-  border-radius: 4px; /* Optional: rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
+  width: auto; /* Badge width */
+  height: 16px; /* Maintain aspect ratio */
+  border-radius: 2px; /* Optional: rounded corners */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
   transition: transform 0.3s ease; /* Add hover effect */
 }
 
