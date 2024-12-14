@@ -4,11 +4,6 @@
   box-sizing: border-box;
 }
 
-/* Disable Right-Click and Drag on Images */
-img {
-  pointer-events: none;
-}
-
 body {
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;
