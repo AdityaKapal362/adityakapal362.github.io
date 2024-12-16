@@ -98,17 +98,20 @@ body {
   cursor: pointer;
 }
 
+/* Dropdown Menu */
 .dropdown-menu {
   position: absolute;
   right: 0;
-  top: 50px;
+  top: 60px;
   background: #1e1e1e;
   color: #f5f5f5;
   list-style: none;
   padding: 10px 0;
   border-radius: 8px;
+  width: 150px;
   display: none;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
 
 .dropdown-menu li {
@@ -119,15 +122,11 @@ body {
 .dropdown-menu li a {
   color: #f5f5f5;
   text-decoration: none;
-  font-size: 0.7rem;
+  font-size: 0.9rem;
 }
 
 .dropdown-menu li a:hover {
   color: #a78bfa;
-}
-
-.toolbar-menu:hover .dropdown-menu {
-  display: block;
 }
 
 /* My Bio Section */
