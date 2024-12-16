@@ -191,15 +191,16 @@
 
   <script>
   const toolbar = document.getElementById("toolbar");
-  const introductionSection = document.querySelector(".introduction");
+  const myBioSection = document.querySelector(".mybio");
   window.addEventListener("scroll", () => {
-    const introSectionTop = introductionSection.getBoundingClientRect().top;
-    if (introSectionTop <= 0) {
+    const myBioSectionTop = myBioSection.getBoundingClientRect().bottom;
+    if (myBioSectionTop <= 0) {
       toolbar.classList.remove("hidden");
     } else {
       toolbar.classList.add("hidden");
     }
   });
 </script>
+  
 </body>
 </html>
