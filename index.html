@@ -9,6 +9,18 @@
 </head>
 <body>
 
+  <!-- Toolbar -->
+  <div id="toolbar" class="toolbar hidden">
+    <span class="toolbar-title">AdityaKapal362's Space</span>
+    <div class="toolbar-menu">
+      <img src="/mine/menu-icon.png" alt="Menu" class="toolbar-menu-icon">
+      <ul class="dropdown-menu">
+        <li><a href="#about-me">About Me</a></li>
+        <li><a href="#social-media">My Posts</a></li>
+      </ul>
+    </div>
+  </div>
+
   <!-- Header Section -->
   <header class="hero">
     <div class="welcome-image">
@@ -176,5 +188,18 @@
   <footer>
     <p>Copyright &copy; 2024 <u>AdityaKapal362</u></p>
   </footer>
+
+  <script>
+  const toolbar = document.getElementById("toolbar");
+  const introductionSection = document.querySelector(".introduction");
+  window.addEventListener("scroll", () => {
+    const introSectionTop = introductionSection.getBoundingClientRect().top;
+    if (introSectionTop <= 0) {
+      toolbar.classList.remove("hidden");
+    } else {
+      toolbar.classList.add("hidden");
+    }
+  });
+</script>
 </body>
 </html>
