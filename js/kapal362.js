@@ -9,6 +9,10 @@ window.addEventListener("scroll", () => {
     toolbar.classList.remove("hidden");
   } else {
     toolbar.classList.add("hidden");
+    if (dropdownMenu.classList.contains("open")) {
+      dropdownMenu.classList.remove("open");
+      menuIcon.src = "/mine/menu-icon.png";
+    }
   }
 });
 
