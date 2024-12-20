@@ -108,10 +108,10 @@ body {
 
 /* Dropdown Menu */
 .dropdown-menu {
-  position: absolute;
+  position: fixed;
   top: 50px;
   left: 0;
-  width: 100%;
+  width: 100vw;
   border-radius: 0;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
@@ -135,7 +135,7 @@ body {
   text-align: left;
   color: #ffffff;
   font-size: 0.9rem;
-  border-bottom: 1px solid rgba(100, 100, 100, 0.2);
+  border-bottom: 1px solid rgba(200, 200, 200, 0.2);
 }
 
 .dropdown-menu li:last-child {
