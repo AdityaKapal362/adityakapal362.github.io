@@ -102,8 +102,8 @@ body {
 }
 
 .toolbar-menu-icon:hover {
-  color: #a78bfa;
-  transition: color 0.3s ease;
+  filter: brightness(0.5) sepia(1) hue-rotate(250deg) saturate(5);
+  transition: filter 0.3s ease;
 }
 
 /* Dropdown Menu */
