@@ -10,8 +10,6 @@ body {
   color: #f5f5f5;
   background-color: #121212;
   text-align: center;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(167, 139, 250, 0.8) transparent;
 }
 
 .hero {
@@ -109,7 +107,7 @@ body {
 /* Dropdown Menu */
 .dropdown-menu {
   position: fixed;
-  top: 50px;
+  top: 60px;
   left: 0;
   width: 100vw;
   border-radius: 0;
@@ -314,23 +312,4 @@ footer {
 /* Smooth Scrolling */
 html {
   scroll-behavior: smooth;
-}
-
-/* Custom Scrollbar Styling */
-body::-webkit-scrollbar {
-  width: 10px;
-}
-
-body::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: rgba(167, 139, 250, 0.8);
-  border-radius: 10px;
-  border: 2px solid transparent;
-}
-
-body::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(196, 181, 253, 1);
 }
