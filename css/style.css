@@ -202,6 +202,13 @@ body {
   margin: 20px auto;
 }
 
+.divider2 {
+  width: 64%;
+  height: 1px;
+  background: #444;
+  margin: 20px auto;
+}
+
 .introduction {
   padding: 20px 15px;
   color: #dddddd;
