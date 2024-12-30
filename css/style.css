@@ -39,7 +39,6 @@ body {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #121212 100%);
 }
 
-/* Scroll Arrow */
 .scroll-arrow {
   position: absolute;
   bottom: 50px;
@@ -56,13 +55,12 @@ body {
   color: #a78bfa;
 }
 
-/* Toolbar */
 .toolbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 55px;
+  height: 60px;
   background: rgba(0, 0, 0, 0.5);
   color: #f5f5f5;
   display: flex;
@@ -118,8 +116,8 @@ body {
     text-decoration: none;
     font-weight: bold;
     color: #f5f5f5;
-    padding: 10px 15px;
-    border-radius: 8px;
+    padding: 10px 10px;
+    border-radius: 3px;
     transition: background-color 0.3s ease;
   }
 
@@ -132,7 +130,6 @@ body {
   display: none;
 }
 
-/* Dropdown Menu */
 .dropdown-menu {
   position: fixed;
   top: 55px;
@@ -180,9 +177,7 @@ body {
   background: rgba(167, 139, 250, 0.2);
 }
 
-/* My Bio Section */
 .mybio {
-  background: #1e1e1e;
   text-align: center;
   padding: 20px 10px;
   border-radius: 8px;
@@ -210,7 +205,6 @@ body {
   color: #bbbbbb;
 }
 
-/* Divider */
 .divider {
   width: 84%;
   height: 1px;
@@ -218,7 +212,6 @@ body {
   margin: 20px auto;
 }
 
-/* Introduction Section */
 .introduction {
   padding: 20px 15px;
   color: #dddddd;
@@ -239,7 +232,6 @@ body {
   color: #c4b5fd;
 }
 
-/* Social Media Section */
 .social-media {
   margin: 20px 0;
 }
@@ -249,7 +241,6 @@ body {
   margin: 0 10px;
 }
 
-/* Projects Section */
 .projects {
   padding: 40px 20px;
   background: #1e1e1e;
@@ -310,7 +301,6 @@ body {
   color: #bbbbbb;
 }
 
-/* Project Badges */
 .project-badges {
   display: flex;
   gap: 8px;
@@ -329,7 +319,6 @@ body {
   transform: scale(1.1);
 }
 
-/* Footer */
 footer {
   padding: 10px 0;
   font-size: 0.7rem;
@@ -337,7 +326,6 @@ footer {
   background: none;
 }
 
-/* Smooth Scrolling */
 html {
   scroll-behavior: smooth;
 }
