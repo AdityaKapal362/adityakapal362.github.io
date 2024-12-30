@@ -39,7 +39,7 @@
       ]
     },
     {
-      "id": "wa-bot",
+      "id": "wa-bot-android",
       "title": "WhatsApp Bot",
       "description": "A bot that runs as an Android app using Android's notification utility. Can perform basic text replies, and can be customized for dictionary, scraper, and other functionalities.",
       "badges": [

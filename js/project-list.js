@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const projectList = document.querySelector(".project-list");
   
-    // Fetch projects from JSON file
     fetch("/mine/projects/list.json")
       .then((response) => response.json())
       .then((projects) => {
