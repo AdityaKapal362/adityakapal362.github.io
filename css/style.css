@@ -118,11 +118,13 @@ body {
   color: #f5f5f5;
   padding: 6px 6px;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
 }
 
 .toolbar-links a:hover {
   background-color: rgba(167, 139, 250, 0.2);
+  transform: scale(1.1);
+  color: #a78bfa;
 }
 
 .dropdown-menu {
