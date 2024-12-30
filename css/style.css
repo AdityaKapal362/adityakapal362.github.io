@@ -321,6 +321,10 @@ html {
 
 @media screen and (min-width: 400px) {
 
+  .toolbar {
+    height: 65px;
+  }
+
   .toolbar-menu-icon {
     display: none;
   }
