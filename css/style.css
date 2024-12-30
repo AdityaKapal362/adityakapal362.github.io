@@ -116,7 +116,7 @@ body {
   font-size: 0.85rem;
   font-weight: bold;
   color: #f5f5f5;
-  padding: 6px 6px;
+  padding: 6px 5px;
   border-radius: 5px;
   transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
 }
