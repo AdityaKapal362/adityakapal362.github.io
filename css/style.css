@@ -129,6 +129,17 @@ body {
   .toolbar-links a:hover {
     background-color: rgba(167, 139, 250, 0.2);
   }
+
+  .introduction {
+    padding: 20px 15px;
+    color: #dddddd;
+    font-size: 1rem;
+    background: #1e1e1e;
+    border-radius: 8px;
+    margin: 20px auto;
+    width: 40%;
+  }
+  
 }
 
 .toolbar-links {
@@ -224,7 +235,7 @@ body {
   background: #1e1e1e;
   border-radius: 8px;
   margin: 20px auto;
-  width: 40%;
+  width: 90%;
 }
 
 .soft-purple-link {
