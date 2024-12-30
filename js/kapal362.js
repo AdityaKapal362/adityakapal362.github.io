@@ -3,6 +3,8 @@ const myBioSection = document.querySelector(".mybio");
 const menuIcon = document.querySelector(".toolbar-menu-icon");
 const dropdownMenu = document.querySelector(".dropdown-menu");
 
+document.addEventListener('contextmenu', (event) => event.preventDefault());
+
 window.addEventListener("scroll", () => {
   const myBioSectionTop = myBioSection.getBoundingClientRect().bottom;
   if (myBioSectionTop <= 0) {
