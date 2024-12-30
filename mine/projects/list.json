@@ -1,161 +1,144 @@
 [
     {
-      "thumbnail": "/mine/projects/s2dge/thumbnail.jpg",
-      "icon": "/mine/projects/s2dge/icon.png",
+      "id": "s2dge",
       "title": "Sketchware 2D Game Engine",
       "description": "A full functioning 2D game project made specifically for Sketchware. Providing essential tools and functionalities to build 2D games directly in Sketchware.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white",
-          "alt": "Java Badge"
+          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804",
-          "alt": "Open-source Badge"
+          "src": "https://img.shields.io/badge/open--source-10b804"
         }
       ]
     },
     {
-      "thumbnail": "/mine/projects/sh-recovery/thumbnail.jpg",
-      "icon": "/mine/projects/sh-recovery/icon.png",
+      "id": "sh-recovery",
       "title": "SH Recovery",
       "description": "A lightweight tool to make a backup of your Sketchware projects in one tap. It has tools like clone, cleaner, and recover broken projects.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white",
-          "alt": "Java Badge"
+          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/closed--source-292929",
-          "alt": "Closed-source Badge"
+          "src": "https://img.shields.io/badge/closed--source-292929"
         }
       ]
     },
     {
-      "thumbnail": "/mine/projects/tekogram/thumbnail.jpg",
-      "icon": "/mine/projects/tekogram/icon.png",
+      "id": "tekogram",
       "title": "Tekogram",
       "description": "A complete WhatsApp app clone UI, with the green circular status feature like Instagram.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white",
-          "alt": "Java Badge"
+          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804",
-          "alt": "Open-source Badge"
+          "src": "https://img.shields.io/badge/open--source-10b804"
         }
       ]
     },
     {
-      "thumbnail": "/mine/projects/wa-bot/thumbnail.jpg",
-      "icon": "/mine/projects/wa-bot/icon.png",
+      "id": "wa-bot",
       "title": "WhatsApp Bot",
       "description": "A bot that runs as an Android app using Android's notification utility. Can perform basic text replies, and can be customized for dictionary, scraper, and other functionalities.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white",
-          "alt": "Java Badge"
+          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804",
-          "alt": "Open-source Badge"
+          "src": "https://img.shields.io/badge/open--source-10b804"
         }
       ]
     },
     {
-      "thumbnail": "/mine/projects/kplayer/thumbnail.jpg",
-      "icon": "/mine/projects/kplayer/icon.png",
+      "id": "kplayer",
       "title": "K' Player",
       "description": "A very simple and basic music player app I have ever made. No special features though.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white",
-          "alt": "Java Badge"
+          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804",
-          "alt": "Open-source Badge"
+          "src": "https://img.shields.io/badge/open--source-10b804"
         }
       ]
     },
     {
-      "thumbnail": "/mine/projects/sgestudio/thumbnail.jpg",
-      "icon": "/mine/projects/sgestudio/icon.png",
+      "id": "sgestudio",
       "title": "SGE Studio",
       "description": "An RPG map maker app specifically made for Sketchware 2D Game Engine, with custom export features.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white",
-          "alt": "Java Badge"
+          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804",
-          "alt": "Open-source Badge"
+          "src": "https://img.shields.io/badge/open--source-10b804"
         }
       ]
     },
     {
-      "thumbnail": "/mine/projects/krhythm/thumbnail.jpg",
-      "icon": "/mine/projects/krhythm/icon.png",
+      "id": "krhythm",
       "title": "K' Rhythm",
       "description": "A basic rhythm game with one mode, like Guitar Hero, but simpler.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white",
-          "alt": "Java Badge"
+          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804",
-          "alt": "Open-source Badge"
+          "src": "https://img.shields.io/badge/open--source-10b804"
         }
       ]
     },
     {
-      "thumbnail": "/mine/projects/spritesplitter/thumbnail.jpg",
-      "icon": "/mine/projects/spritesplitter/icon.png",
+      "id": "spritesplitter",
       "title": "Sprite Splitter",
       "description": "A tool to split a single image into pieces, supporting multiple formats. Mainly used by 2D RPG game devs who are lazy to split their image assets programmatically.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white",
-          "alt": "Java Badge"
+          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/closed--source-292929",
-          "alt": "Closed-source Badge"
+          "src": "https://img.shields.io/badge/closed--source-292929"
         }
       ]
     },
     {
-      "thumbnail": "/mine/projects/sforum/thumbnail.jpg",
-      "icon": "/mine/projects/sforum/icon.png",
+      "id": "sforum",
       "title": "Sketchware Forum",
       "description": "An unofficial Sketchware Forum app abandoned for 4 years. It has a beautiful landing page design.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white",
-          "alt": "Java Badge"
+          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804",
-          "alt": "Open-source Badge"
+          "src": "https://img.shields.io/badge/open--source-10b804"
         }
       ]
     },
     {
-      "thumbnail": "/mine/projects/s3dge/thumbnail.jpg",
-      "icon": "/mine/projects/s3dge/icon.png",
+      "id": "s3dge",
       "title": "Sketchware 3D Game Engine",
       "description": "A working 3D renderer made with pure Java for Sketchware. It was a port of a big 3D library from GitHub.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white",
-          "alt": "Java Badge"
+          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804",
-          "alt": "Open-source Badge"
+          "src": "https://img.shields.io/badge/open--source-10b804"
+        }
+      ]
+    },
+    {
+      "id": "sh-cloud",
+      "title": "SH Cloud",
+      "description": "Basicly a SH Recovery-like but only backup to clouds and run-in-background to ensure your projects completely safe.",
+      "badges": [
+        {
+          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
+        },
+        {
+          "src": "https://img.shields.io/badge/open--source-10b804"
         }
       ]
     }

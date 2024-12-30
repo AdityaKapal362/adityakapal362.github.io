@@ -12,8 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
           const thumbnail = document.createElement("img");
           thumbnail.classList.add("project-thumbnail");
-          thumbnail.src = project.thumbnail;
-          thumbnail.alt = `${project.title} Thumbnail`;
+          thumbnail.src = `/mine/projects/${project.id}/thumbnail.jpg`;
           projectItem.appendChild(thumbnail);
   
           const projectContent = document.createElement("div");
@@ -22,8 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const title = document.createElement("h3");
           const icon = document.createElement("img");
           icon.classList.add("project-icon");
-          icon.src = project.icon;
-          icon.alt = `${project.title} Icon`;
+          icon.src = `/mine/projects/${project.id}/icon.png`;
           title.appendChild(icon);
           title.appendChild(document.createTextNode(project.title));
           projectContent.appendChild(title);
@@ -37,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
           project.badges.forEach((badge) => {
             const badgeImg = document.createElement("img");
             badgeImg.src = badge.src;
-            badgeImg.alt = badge.alt;
             badgeImg.classList.add("badge");
             badgeContainer.appendChild(badgeImg);
           });
