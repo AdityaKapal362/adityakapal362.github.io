@@ -355,18 +355,22 @@ animap {
   text-shadow: 0 0 7px rgba(255,255,255,.3), 0 0 3px rgba(255,255,255,.3);
 }
 
-.anima {
+.animacon {
   color: #e5e5e5;
-  height: auto;
+  font-size: 2.26rem;
+  text-transform: uppercase;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+}
+
+.anima {
   font-weight: bold;
-  overflow: hidden;
+  height:50px;
+  overflow:hidden;
   margin-left: 1rem;
-  text-align: center;
+}
 
 .anima > div > div {
   padding: 0.25rem 0.75rem;
