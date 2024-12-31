@@ -349,65 +349,37 @@ html {
   scroll-behavior: smooth;
 }
 
-animap {
-  font-weight: bold;
-  font-size: 2rem;
-  text-shadow: 0 0 7px rgba(255,255,255,.3), 0 0 3px rgba(255,255,255,.3);
-  margin-bottom: 1rem;
-}
-
-.animacon {
-  color: #e5e5e5;
-  font-size: 2.26rem;
-  height: 100vh;
+.linearlayout {
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 20vw;
+  height: 100vh;
+  width: 100vw;
+  color: white;
 }
 
-.anima {
+.linearlayout h1 {
+  font-size: 9vmin;
+  color: #8bf;
+  text-align: left;
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  margin: 1rem 0 1rem 2rem;
+}
+
+.textview {
+  font-size: 2rem;
   font-weight: bold;
-  height:50px;
-  overflow:hidden;
-  margin-left: 1rem;
+  margin: 0.5rem 0;
 }
 
-.anima > div > div {
-  padding: 0.25rem 0.75rem;
-  height:2.81rem;
-  margin-bottom: 2.81rem;
-  display:inline-block;
-}
-
-.anima div:first-child {
-  animation: text-anima 8s infinite;
-}
-
-.anima1 div {
-  color:#20a7d8;
-}
-.anima2 div {
-  color:#CD921E;
-}
-.anima3 div {
-  color:#c10528;
-}
-.anima3 div {
-  color:#18cc54;
-}
-
-@keyframes text-anima {
-  0% {margin-top: 0;}
-  10% {margin-top: 0;}
-  20% {margin-top: -5.62rem;}
-  30% {margin-top: -5.62rem;}
-  40% {margin-top: -11.24rem;}
-  60% {margin-top: -11.24rem;}
-  70% {margin-top: -5.62rem;}
-  80% {margin-top: -5.62rem;}
-  90% {margin-top: 0;}
-  100% {margin-top: 0;}
+.divider {
+  background-color: white;
+  height: 1px;
+  width: 25vw;
+  margin-top: 1.5rem;
 }
 
 @media screen and (min-width: 400px) {
