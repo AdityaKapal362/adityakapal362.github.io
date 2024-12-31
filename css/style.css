@@ -353,18 +353,13 @@ animap {
   text-shadow: 0 0 7px rgba(255,255,255,.3), 0 0 3px rgba(255,255,255,.3);
 }
 
-.animacon {
+.anima {
   color: #e5e5e5;
-  font-size: 2rem;
-  text-transform: uppercase;
-  height: 100vh;
+  height:50px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.anima {
-  height:50px;
+  font-size: 2rem;
   overflow:hidden;
   margin-left: 1rem;
 }
