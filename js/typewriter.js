@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     new Typed(".typewriter", {
       strings: [
-        "Aditya Putra Ramadhan,",
+        "Aditya Putra,",
         'a <span style="color: #0ef">Java</span> addict,',
         "a CSS Nerd,",
         '<span style="color: #ff0000">Indonesian</span>'
