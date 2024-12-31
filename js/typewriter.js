@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
     new Typed(".typewriter", {
       strings: [
         "Aditya Putra Ramadhan,",
-        'a <u style="color: #0ef">Java</u> addict,',
+        'a <span style="color: #0ef">Java</span> addict,',
         "a CSS Nerd,",
-        '<u style="color: #ff0000">Indonesian</u>'
+        '<span style="color: #ff0000">Indonesian</span>'
       ],
       typeSpeed: 30,
       startDelay: 1500,
