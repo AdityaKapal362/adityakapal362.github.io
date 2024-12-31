@@ -357,13 +357,13 @@ html {
   padding-left: 10vw;
   height: 100vh;
   width: 100vw;
-  color: white;
 }
 
 .textview {
   font-size: 2rem;
   font-weight: bold;
   margin: 0.5rem 0;
+  color: white;
 }
 
 .divid {
