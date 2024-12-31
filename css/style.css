@@ -357,6 +357,7 @@ html {
   padding-left: 10vw;
   height: 100vh;
   width: 100vw;
+  color: white;
 }
 
 .textview {
@@ -374,6 +375,24 @@ html {
   margin-top: 1.5rem;
 }
 
+.typewriter::after {
+  content: "|";
+  display: inline;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @media screen and (min-width: 400px) {
 
   .toolbar {
@@ -386,7 +405,7 @@ html {
 
   .toolbar-links {
     display: flex;
-    gap: 15px;
+    gap: 15px; 
   }
   
 }
