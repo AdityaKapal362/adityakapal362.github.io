@@ -393,6 +393,9 @@ animap {
 .anima3 div {
   color:#c10528;
 }
+.anima3 div {
+  color:#18cc54;
+}
 
 @keyframes text-anima {
   0% {margin-top: 0;}
