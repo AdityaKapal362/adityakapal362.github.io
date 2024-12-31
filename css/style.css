@@ -350,6 +350,8 @@ html {
 }
 
 animap {
+  font-weight: bold;
+  font-size: 2rem;
   text-shadow: 0 0 7px rgba(255,255,255,.3), 0 0 3px rgba(255,255,255,.3);
 }
 
@@ -360,6 +362,7 @@ animap {
   align-items: center;
   justify-content: center;
   font-size: 2rem;
+  font-weight: bold;
   overflow:hidden;
   margin-left: 1rem;
 }
@@ -397,7 +400,6 @@ animap {
   90% {margin-top: 0;}
   100% {margin-top: 0;}
 }
-
 
 @media screen and (min-width: 400px) {
 
