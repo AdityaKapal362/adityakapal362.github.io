@@ -1,17 +1,1 @@
-document.addEventListener("DOMContentLoaded", function () {
-    new Typed(".typewriter", {
-      strings: [
-        "Aditya Putra,",
-        'a <span style="color: #0ef">Java</span> addict,',
-        "a CSS Nerd,",
-        '<span style="color: #ff0000">Indonesian</span>'
-      ],
-      typeSpeed: 30,
-      startDelay: 1500,
-      backSpeed: 20,
-      backDelay: 1000,
-      loop: true,
-      showCursor: false,
-      contentType: "html"
-    });
-  });
+function _0x2da3(_0x29545b,_0x1b0b29){var _0x4ecc70=_0x4ecc();return _0x2da3=function(_0x2da33b,_0x54dfd8){_0x2da33b=_0x2da33b-0x1ce;var _0x188f9c=_0x4ecc70[_0x2da33b];return _0x188f9c;},_0x2da3(_0x29545b,_0x1b0b29);}function _0x4ecc(){var _0xd9c2d5=['1101760qyRNYv','a\x20<span\x20style=\x22color:\x20#0ef\x22>Java</span>\x20addict,','203DEzShK','a\x20CSS\x20Nerd,','10LVeZhx','3655091dZXJaH','559040CZqkMn','16SUxeVg','<span\x20style=\x22color:\x20#ff0000\x22>Indonesian</span>','2345880WsrkSe','1018035zHlxbs','29103UvsYRX','DOMContentLoaded','181248hRQjhb','98MYcAYM','Aditya\x20Putra,'];_0x4ecc=function(){return _0xd9c2d5;};return _0x4ecc();}var _0x46cf30=_0x2da3;(function(_0xca7653,_0x52d7ab){var _0x27883f=_0x2da3,_0x1705ff=_0xca7653();while(!![]){try{var _0x107fe5=parseInt(_0x27883f(0x1d9))/0x1+parseInt(_0x27883f(0x1d7))/0x2*(-parseInt(_0x27883f(0x1d4))/0x3)+-parseInt(_0x27883f(0x1d0))/0x4*(parseInt(_0x27883f(0x1cf))/0x5)+-parseInt(_0x27883f(0x1d2))/0x6+-parseInt(_0x27883f(0x1db))/0x7*(-parseInt(_0x27883f(0x1d6))/0x8)+parseInt(_0x27883f(0x1d3))/0x9*(-parseInt(_0x27883f(0x1dd))/0xa)+parseInt(_0x27883f(0x1ce))/0xb;if(_0x107fe5===_0x52d7ab)break;else _0x1705ff['push'](_0x1705ff['shift']());}catch(_0x411278){_0x1705ff['push'](_0x1705ff['shift']());}}}(_0x4ecc,0xa2345),document['addEventListener'](_0x46cf30(0x1d5),function(){var _0x593194=_0x46cf30;new Typed('.typewriter',{'strings':[_0x593194(0x1d8),_0x593194(0x1da),_0x593194(0x1dc),_0x593194(0x1d1)],'typeSpeed':0x1e,'startDelay':0x5dc,'backSpeed':0x14,'backDelay':0x3e8,'loop':!![],'showCursor':![],'contentType':'html'});}));
