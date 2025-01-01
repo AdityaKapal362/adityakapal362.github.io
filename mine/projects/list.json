@@ -5,10 +5,10 @@
       "description": "A full functioning 2D game project made specifically for Sketchware. Providing essential tools and functionalities to build 2D games directly in Sketchware.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
+          "src": "Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804"
+          "src": "open--source-10b804"
         }
       ]
     },
@@ -18,10 +18,10 @@
       "description": "A lightweight tool to make a backup of your Sketchware projects in one tap. It has tools like clone, cleaner, and recover broken projects.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
+          "src": "Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/closed--source-292929"
+          "src": "closed--source-292929"
         }
       ]
     },
@@ -31,10 +31,10 @@
       "description": "A complete WhatsApp app clone UI, with the green circular status feature like Instagram.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
+          "src": "Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804"
+          "src": "open--source-10b804"
         }
       ]
     },
@@ -44,10 +44,10 @@
       "description": "A bot that runs as an Android app using Android's notification utility. Can perform basic text replies, and can be customized for dictionary, scraper, and other functionalities.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
+          "src": "Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804"
+          "src": "open--source-10b804"
         }
       ]
     },
@@ -57,10 +57,10 @@
       "description": "A very simple and basic music player app I have ever made. No special features though.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
+          "src": "Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804"
+          "src": "open--source-10b804"
         }
       ]
     },
@@ -70,10 +70,10 @@
       "description": "An RPG map maker app specifically made for Sketchware 2D Game Engine, with custom export features.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
+          "src": "Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804"
+          "src": "open--source-10b804"
         }
       ]
     },
@@ -83,10 +83,10 @@
       "description": "A basic rhythm game with one mode, like Guitar Hero, but simpler.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
+          "src": "Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804"
+          "src": "open--source-10b804"
         }
       ]
     },
@@ -96,10 +96,10 @@
       "description": "A tool to split a single image into pieces, supporting multiple formats. Mainly used by 2D RPG game devs who are lazy to split their image assets programmatically.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
+          "src": "Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/closed--source-292929"
+          "src": "closed--source-292929"
         }
       ]
     },
@@ -109,10 +109,10 @@
       "description": "An unofficial Sketchware Forum app abandoned for 4 years. It has a beautiful landing page design.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
+          "src": "Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804"
+          "src": "open--source-10b804"
         }
       ]
     },
@@ -122,10 +122,10 @@
       "description": "A working 3D renderer made with pure Java for Sketchware. It was a port of a big 3D library from GitHub.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
+          "src": "Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804"
+          "src": "open--source-10b804"
         }
       ]
     },
@@ -135,10 +135,10 @@
       "description": "Basicly a SH Recovery-like but only backup to clouds and run-in-background to ensure your projects completely safe.",
       "badges": [
         {
-          "src": "https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
+          "src": "Java-ED8B00?style=flat&logo=openjdk&logoColor=white"
         },
         {
-          "src": "https://img.shields.io/badge/open--source-10b804"
+          "src": "open--source-10b804"
         }
       ]
     }
