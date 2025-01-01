@@ -2,8 +2,15 @@ const toolbar = document.getElementById("toolbar");
 const myBioSection = document.querySelector(".mybio");
 const menuIcon = document.querySelector(".toolbar-menu-icon");
 const dropdownMenu = document.querySelector(".dropdown-menu");
+const scrollButton = document.getElementById("scrollArrow");
 
 document.addEventListener('contextmenu', (event) => event.preventDefault());
+
+scrollButton.addEventListener("click", function (event) {
+  event.preventDefault();
+  const target = document.getElementById("introduction");
+  target.scrollIntoView({ behavior: "smooth" });
+});
 
 window.addEventListener("scroll", () => {
   const myBioSectionTop = myBioSection.getBoundingClientRect().bottom;
