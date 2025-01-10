@@ -412,13 +412,12 @@ html {
 .viewpager {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   justify-content: center;
 }
 
 .impression-card {
   background: linear-gradient(135deg, #1e1e1e, #2196f3);
-  border-radius: 25px;
   padding: 0;
   width: 100%;
   max-width: 300px;
@@ -426,36 +425,38 @@ html {
   position: relative;
   transition: background-color 0.3s ease;
   z-index: 1;
-  margin: 10px auto;
+  margin: 5px auto;
 }
 
 .impression-card::before {
   content: '';
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
   background: linear-gradient(135deg, rgba(30, 30, 30, 0.5), rgba(33, 150, 243, 0.5));
   filter: blur(20px);
   z-index: -1;
-  border-radius: 25px;
 }
 
 .card-content {
   padding: 30px;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   gap: 10px;
   height: 100%;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  border: 2px solid white;
+  border-radius: 5px;
 }
 
 .card-content:hover {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(200, 200, 200, 0.4);
+  border-color: rgba(255, 255, 255, 0.7);
 }
 
 .card-content img {
