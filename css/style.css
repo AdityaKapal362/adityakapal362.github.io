@@ -392,6 +392,87 @@ html {
   animation: blink 1s infinite;
 }
 
+.impressions-container {
+  padding: 40px 20px;
+  background: #1e1e1e;
+  color: #f5f5f5;
+  border-radius: 8px;
+  margin: 20px auto;
+  width: 90%;
+}
+
+.impressions-container h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #f5f5f5;
+  text-align: center;
+}
+
+.viewpager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.impression-card {
+  background: linear-gradient(135deg, #2b2b2b, #3c3c3c);
+  border-radius: 5px;
+  padding: 0;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.impression-card:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.card-content {
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+}
+
+.card-content img {
+  width: 20%;
+  height: auto;
+  border-radius: 50%;
+  align-self: center;
+}
+
+.card-content h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+.card-content .divider {
+  width: 30%;
+  height: 1px;
+  background-color: white;
+  margin: 0 auto;
+}
+
+.card-content p {
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+}
+
 @keyframes blink {
   0% {
     opacity: 1;
