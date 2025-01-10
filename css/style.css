@@ -424,7 +424,20 @@ html {
   max-width: 300px;
   overflow: hidden;
   position: relative;
-  transition: background-color 0.3s ease;
+  z-index: 1;
+}
+
+.impression-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.5), rgba(33, 150, 243, 0.5));
+  filter: blur(15px);
+  z-index: -1;
+  border-radius: 5px;
 }
 
 .card-content {
@@ -436,6 +449,7 @@ html {
   justify-content: center;
   gap: 10px;
   height: 100%;
+  transition: background-color 0.3s ease;
 }
 
 .card-content:hover {
@@ -443,8 +457,8 @@ html {
 }
 
 .card-content img {
-  width: 20%;
-  height: auto;
+  width: 40%;
+  height: 40%;
   border-radius: 50%;
   align-self: flex-start;
 }
@@ -457,7 +471,7 @@ html {
 
 .card-content .divider {
   width: 30%;
-  height: 1px;
+  height: 3px;
   background-color: white;
   margin: 0;
 }
