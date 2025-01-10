@@ -425,17 +425,17 @@ html {
   position: relative;
   transition: background-color 0.3s ease;
   z-index: 1;
-  margin: 5px auto;
+  margin: 6px auto;
   border-radius: 5px;
 }
 
 .impression-card::before {
   content: '';
   position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
   background: linear-gradient(135deg, rgba(30, 30, 30, 0.5), rgba(33, 150, 243, 0.5));
   filter: blur(20px);
   z-index: -1;
