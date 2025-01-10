@@ -424,24 +424,25 @@ html {
   max-width: 300px;
   overflow: hidden;
   position: relative;
+  transition: background-color 0.3s ease;
   z-index: 1;
 }
 
 .impression-card::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
   background: linear-gradient(135deg, rgba(30, 30, 30, 0.5), rgba(33, 150, 243, 0.5));
-  filter: blur(15px);
+  filter: blur(20px);
   z-index: -1;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .card-content {
-  padding: 40px;
+  padding: 30px;
   background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   flex-direction: column;
@@ -464,7 +465,7 @@ html {
 }
 
 .card-content h3 {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: bold;
   color: white;
 }
