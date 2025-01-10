@@ -418,7 +418,7 @@ html {
 
 .impression-card {
   background: linear-gradient(135deg, #1e1e1e, #2196f3);
-  border-radius: 5px;
+  border-radius: 25px;
   padding: 0;
   width: 100%;
   max-width: 300px;
@@ -426,7 +426,7 @@ html {
   position: relative;
   transition: background-color 0.3s ease;
   z-index: 1;
-  margin: 20px auto;
+  margin: 10px auto;
 }
 
 .impression-card::before {
@@ -439,7 +439,7 @@ html {
   background: linear-gradient(135deg, rgba(30, 30, 30, 0.5), rgba(33, 150, 243, 0.5));
   filter: blur(20px);
   z-index: -1;
-  border-radius: 15px;
+  border-radius: 25px;
 }
 
 .card-content {
@@ -459,7 +459,7 @@ html {
 }
 
 .card-content img {
-  width: 32%;
+  width: 22%;
   height: auto;
   border-radius: 50%;
   align-self: flex-start;
