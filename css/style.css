@@ -422,11 +422,11 @@ html {
   padding: 0;
   width: 100%;
   max-width: 300px;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   transition: background-color 0.3s ease;
   z-index: 1;
-  margin: 10px auto;
+  margin: 20px auto;
 }
 
 .impression-card::before {
@@ -459,7 +459,7 @@ html {
 }
 
 .card-content img {
-  width: 40%;
+  width: 32%;
   height: auto;
   border-radius: 50%;
   align-self: flex-start;
