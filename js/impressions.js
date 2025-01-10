@@ -1,6 +1,6 @@
 async function loadImpressions() {
   try {
-      const response = await fetch('/path-to-your-impressions.json');
+      const response = await fetch('/mine/impressions.json');
       const impressions = await response.json();
       const viewpager = document.getElementById('viewpager');
       const isDesktop = window.innerWidth > 768;
