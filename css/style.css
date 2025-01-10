@@ -418,10 +418,6 @@ html {
 
 .impression-card {
   background: linear-gradient(135deg, #1e1e1e, #2196f3);
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
   border-radius: 5px;
   padding: 0;
   width: 100%;
@@ -430,15 +426,12 @@ html {
   position: relative;
   transition: background-color 0.3s ease;
   z-index: 1;
+  margin: 10px auto;
 }
 
 .impression-card::before {
   content: '';
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
   background: linear-gradient(135deg, rgba(30, 30, 30, 0.5), rgba(33, 150, 243, 0.5));
   filter: blur(20px);
   z-index: -1;
