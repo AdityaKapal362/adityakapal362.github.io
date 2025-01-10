@@ -425,7 +425,7 @@ html {
   position: relative;
   transition: background-color 0.3s ease;
   z-index: 1;
-  margin: 5px auto;
+  margin: 0 10px;
   border-radius: 5px;
 }
 
