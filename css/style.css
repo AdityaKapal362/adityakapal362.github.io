@@ -426,6 +426,7 @@ html {
   transition: background-color 0.3s ease;
   z-index: 1;
   margin: 5px auto;
+  border-radius: 5px;
 }
 
 .impression-card::before {
@@ -438,6 +439,7 @@ html {
   background: linear-gradient(135deg, rgba(30, 30, 30, 0.5), rgba(33, 150, 243, 0.5));
   filter: blur(20px);
   z-index: -1;
+  border-radius: 5px;
 }
 
 .card-content {
@@ -450,7 +452,7 @@ html {
   gap: 10px;
   height: 100%;
   transition: background-color 0.3s ease, border-color 0.3s ease;
-  border: 2px solid white;
+  border: 1px solid white;
   border-radius: 5px;
 }
 
