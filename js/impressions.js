@@ -6,8 +6,8 @@ async function loadImpressions() {
       const isDesktop = window.innerWidth > 768;
       const itemsPerRow = isDesktop ? Math.floor(window.innerWidth / 300) : 1;
       viewpager.style.gridTemplateColumns = `repeat(${itemsPerRow}, 1fr)`;
-      impressions.forEach(({ 'github-link': username, text }) => {
-        const profileImageUrl = username !== '-' ? `https://github.com/${username}.png` : 'https://img.freepik.com/premium-psd/contact-icon-illustration-isolated_23-2151903357.jpg';
+      impressions.forEach(({ 'github-link': username, p, text }) => {
+        const profileImageUrl = p == '0' ? `https://github.com/${username}.png` : 'https://img.freepik.com/premium-psd/contact-icon-illustration-isolated_23-2151903357.jpg';
         const card = document.createElement('div');
         card.classList.add('impression-card');
         card.innerHTML = `
