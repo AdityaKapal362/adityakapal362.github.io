@@ -2,13 +2,9 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <meta name="theme-color" content="#111827">
-
-    <title>Resi Scanner</title>
+    <title>Resi Barcode Scanner</title>
 
     <style>
         * {
@@ -17,42 +13,37 @@
 
         body {
             margin: 0;
-            background: #f3f4f6;
-            color: #111827;
             font-family: Arial, Helvetica, sans-serif;
-        }
-
-        header {
-            background: #111827;
-            color: white;
-            padding: 18px 16px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 22px;
-        }
-
-        header p {
-            margin: 6px 0 0;
-            font-size: 13px;
-            opacity: 0.7;
+            background: #f4f6f8;
+            color: #222;
         }
 
         .container {
             width: 100%;
-            max-width: 650px;
+            max-width: 900px;
             margin: auto;
-            padding: 14px;
+            padding: 20px;
         }
 
-        .scanner-container {
+        h1 {
+            text-align: center;
+            margin: 0 0 20px;
+            font-size: 28px;
+        }
+
+        .scanner-card {
+            background: white;
+            border-radius: 16px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .video-container {
             position: relative;
             width: 100%;
             aspect-ratio: 4 / 3;
-            background: #000;
-            border-radius: 16px;
+            background: #111;
+            border-radius: 12px;
             overflow: hidden;
         }
 
@@ -60,68 +51,79 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            background: #000;
+            display: block;
         }
 
         .scanner-frame {
             position: absolute;
-            left: 10%;
-            top: 25%;
-            width: 80%;
-            height: 50%;
-            border: 2px solid rgba(255,255,255,0.8);
-            border-radius: 12px;
+            top: 50%;
+            left: 50%;
+            width: 75%;
+            height: 25%;
+            transform: translate(-50%, -50%);
+            border: 3px solid #00ff66;
+            border-radius: 10px;
             pointer-events: none;
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
         }
 
-        .scan-line {
-            position: absolute;
-            left: 12%;
-            width: 76%;
-            height: 2px;
-            background: #22c55e;
-            box-shadow: 0 0 10px #22c55e;
-            animation: scanLine 2s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes scanLine {
-            0% {
-                top: 28%;
-            }
-
-            50% {
-                top: 72%;
-            }
-
-            100% {
-                top: 28%;
-            }
-        }
-
-        .camera-status {
+        .status {
             text-align: center;
-            padding: 10px;
-            font-size: 13px;
+            margin-top: 12px;
+            font-weight: bold;
+            min-height: 24px;
         }
 
-        .online {
-            color: #16a34a;
-            font-weight: bold;
+        .status.ready {
+            color: #16803c;
         }
 
-        .offline {
-            color: #dc2626;
-            font-weight: bold;
+        .status.error {
+            color: #d93025;
+        }
+
+        .status.warning {
+            color: #d97706;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
         }
 
         button {
+            flex: 1;
             border: none;
             border-radius: 10px;
-            padding: 12px;
-            font-size: 14px;
+            padding: 13px 15px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        #startButton {
+            background: #16803c;
+            color: white;
+        }
+
+        #stopButton {
+            background: #d93025;
+            color: white;
+        }
+
+        #exportButton {
+            background: #333;
+            color: white;
+        }
+
+        #clearButton {
+            background: #777;
+            color: white;
         }
 
         button:disabled {
@@ -129,118 +131,98 @@
             cursor: not-allowed;
         }
 
-        .camera-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .camera-buttons button {
-            flex: 1;
-        }
-
-        .btn-start {
-            background: #16a34a;
-            color: white;
-        }
-
-        .btn-stop {
-            background: #dc2626;
-            color: white;
-        }
-
-        .btn-export {
-            background: #2563eb;
-            color: white;
-        }
-
-        .btn-clear {
-            background: #e5e7eb;
-            color: #111827;
-        }
-
         .last-scan {
-            margin-top: 14px;
-            padding: 16px;
-            background: white;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
             border-radius: 12px;
-            border-left: 5px solid #16a34a;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            text-align: center;
         }
 
-        .last-scan.double {
-            border-left-color: #dc2626;
+        .last-scan-title {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
         }
 
-        .last-title {
-            color: #6b7280;
-            font-size: 12px;
-            margin-bottom: 6px;
-        }
-
-        .last-value {
-            font-size: 17px;
+        #lastBarcode {
+            font-size: 20px;
             font-weight: bold;
             word-break: break-all;
         }
 
+        #lastMessage {
+            margin-top: 6px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
         .stats {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 14px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
         }
 
         .stat {
             background: white;
+            padding: 15px;
             border-radius: 12px;
-            padding: 14px 6px;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
         }
 
         .stat-number {
-            font-size: 22px;
+            font-size: 26px;
             font-weight: bold;
         }
 
         .stat-label {
             margin-top: 4px;
-            font-size: 10px;
-            color: #6b7280;
+            color: #666;
+            font-size: 13px;
         }
 
-        .history-box {
-            margin-top: 14px;
+        .history-card {
+            margin-top: 20px;
             background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-radius: 16px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
         .history-header {
-            padding: 14px;
-            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
         .history-header h2 {
-            margin: 0 0 10px;
-            font-size: 17px;
+            margin: 0;
+            font-size: 20px;
         }
 
-        #search {
+        #searchInput {
             width: 100%;
-            padding: 11px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 15px;
+            margin-bottom: 12px;
             outline: none;
         }
 
-        #search:focus {
-            border-color: #2563eb;
+        #searchInput:focus {
+            border-color: #16803c;
         }
 
-        .history-list {
+        #historyList {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
             max-height: 500px;
             overflow-y: auto;
         }
@@ -249,23 +231,23 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 12px 14px;
-            border-bottom: 1px solid #f1f1f1;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border-left: 4px solid #16803c;
         }
 
-        .status {
-            width: 10px;
-            height: 10px;
-            flex-shrink: 0;
+        .history-number {
+            min-width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #16803c;
+            color: white;
             border-radius: 50%;
-        }
-
-        .status-new {
-            background: #16a34a;
-        }
-
-        .status-double {
-            background: #dc2626;
+            font-size: 13px;
+            font-weight: bold;
         }
 
         .history-content {
@@ -273,56 +255,65 @@
             min-width: 0;
         }
 
-        .history-barcode {
-            font-size: 14px;
+        .barcode {
             font-weight: bold;
             word-break: break-all;
         }
 
-        .history-time {
-            margin-top: 3px;
-            font-size: 11px;
-            color: #9ca3af;
+        .timestamp {
+            color: #777;
+            font-size: 12px;
+            margin-top: 4px;
         }
 
-        .history-badge {
-            flex-shrink: 0;
-            padding: 4px 7px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: bold;
-        }
-
-        .badge-new {
+        .badge {
             background: #dcfce7;
             color: #166534;
-        }
-
-        .badge-double {
-            background: #fee2e2;
-            color: #991b1b;
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: bold;
+            white-space: nowrap;
         }
 
         .empty {
-            padding: 30px 15px;
             text-align: center;
-            color: #9ca3af;
+            padding: 30px 10px;
+            color: #777;
         }
 
-        .bottom-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 10px;
+        .info {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            line-height: 1.5;
         }
 
-        @media (max-width: 400px) {
-            .stat-number {
-                font-size: 18px;
+        @media (max-width: 600px) {
+            .container {
+                padding: 12px;
             }
 
-            .stat-label {
-                font-size: 9px;
+            h1 {
+                font-size: 23px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .history-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .history-item {
+                align-items: flex-start;
+            }
+
+            .badge {
+                display: none;
             }
         }
     </style>
@@ -330,59 +321,45 @@
 
 <body>
 
-<header>
-    <h1>📦 Resi Scanner</h1>
-    <p>Continuous Barcode Scanner</p>
-</header>
-
 <div class="container">
 
-    <div class="scanner-container">
+    <h1>📦 Resi Barcode Scanner</h1>
 
-        <video
-            id="video"
-            autoplay
-            muted
-            playsinline>
-        </video>
+    <div class="scanner-card">
 
-        <div class="scanner-frame"></div>
-        <div class="scan-line"></div>
-
-    </div>
-
-    <div class="camera-status">
-        Status:
-        <span id="cameraStatus" class="offline">
-            Kamera belum aktif
-        </span>
-    </div>
-
-    <div class="camera-buttons">
-
-        <button
-            id="startButton"
-            class="btn-start">
-            📷 Mulai Scan
-        </button>
-
-        <button
-            id="stopButton"
-            class="btn-stop"
-            disabled>
-            ⏹ Stop
-        </button>
-
-    </div>
-
-    <div id="lastScanBox" class="last-scan">
-
-        <div class="last-title">
-            HASIL SCAN TERAKHIR
+        <div class="video-container">
+            <video id="video" autoplay muted playsinline></video>
+            <div class="scanner-frame"></div>
         </div>
 
-        <div id="lastScan" class="last-value">
-            Belum ada scan
+        <div id="status" class="status">
+            Kamera belum dimulai
+        </div>
+
+        <div class="buttons">
+            <button id="startButton">
+                ▶ Mulai Scan
+            </button>
+
+            <button id="stopButton" disabled>
+                ⏹ Stop
+            </button>
+        </div>
+
+        <div class="last-scan">
+
+            <div class="last-scan-title">
+                Hasil Scan Terakhir
+            </div>
+
+            <div id="lastBarcode">
+                -
+            </div>
+
+            <div id="lastMessage">
+                Belum ada scan
+            </div>
+
         </div>
 
     </div>
@@ -390,1162 +367,1250 @@
     <div class="stats">
 
         <div class="stat">
-            <div id="totalScan" class="stat-number">0</div>
-            <div class="stat-label">TOTAL SCAN</div>
+            <div id="totalScan" class="stat-number">
+                0
+            </div>
+
+            <div class="stat-label">
+                Total Resi
+            </div>
         </div>
 
         <div class="stat">
-            <div id="uniqueScan" class="stat-number">0</div>
-            <div class="stat-label">RESI UNIK</div>
-        </div>
+            <div id="uniqueScan" class="stat-number">
+                0
+            </div>
 
-        <div class="stat">
-            <div id="duplicateScan" class="stat-number">0</div>
-            <div class="stat-label">DOUBLE</div>
-        </div>
-
-    </div>
-
-    <div class="history-box">
-
-        <div class="history-header">
-
-            <h2>📋 History Scan</h2>
-
-            <input
-                type="text"
-                id="search"
-                placeholder="🔍 Cari nomor resi...">
-
-        </div>
-
-        <div id="historyList" class="history-list">
-            <div class="empty">
-                Belum ada barcode yang discan.
+            <div class="stat-label">
+                Resi Unik
             </div>
         </div>
 
     </div>
 
-    <div class="bottom-buttons">
+    <div class="history-card">
 
-        <button
-            id="exportButton"
-            class="btn-export">
-            📥 Export CSV
-        </button>
+        <div class="history-header">
+            <h2>📋 History Scan</h2>
+        </div>
 
-        <button
-            id="clearButton"
-            class="btn-clear">
-            🗑️ Hapus History
-        </button>
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔎 Cari nomor resi..."
+            autocomplete="off"
+        >
 
+        <div id="historyList">
+            <div class="empty">
+                Belum ada barcode yang discan.
+            </div>
+        </div>
+
+        <div class="buttons">
+
+            <button id="exportButton">
+                📥 Export CSV
+            </button>
+
+            <button id="clearButton">
+                🗑 Hapus History
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="info">
+        Barcode yang sudah pernah discan tidak akan disimpan lagi.
+        <br>
+        Data tersimpan otomatis di browser perangkat ini.
     </div>
 
 </div>
 
 
-<!--
-    ZXING ES MODULE
-
-    Tidak menggunakan:
-    ZXing
-    ZXingBrowser
-
-    Jadi tidak akan ada error:
-    "ZXingBrowser is not defined"
--->
-
 <script type="module">
 
-import {
-    BrowserMultiFormatReader
-} from "https://cdn.jsdelivr.net/npm/@zxing/browser@0.1.5/+esm";
+    /*
+     * ============================================================
+     * ZXING IMPORT
+     * ============================================================
+     */
+
+    import {
+        BrowserMultiFormatReader
+    } from "https://cdn.jsdelivr.net/npm/@zxing/browser@0.1.5/+esm";
 
 
-/* =========================================
-   CONFIG
-========================================= */
+    /*
+     * ============================================================
+     * ELEMENT
+     * ============================================================
+     */
 
-const SCAN_COOLDOWN = 1500;
+    const video = document.getElementById("video");
 
+    const statusElement =
+        document.getElementById("status");
 
-/* =========================================
-   VARIABLES
-========================================= */
+    const lastBarcodeElement =
+        document.getElementById("lastBarcode");
 
-let codeReader = null;
-let scanning = false;
-let currentControls = null;
+    const lastMessageElement =
+        document.getElementById("lastMessage");
 
-let history = [];
+    const startButton =
+        document.getElementById("startButton");
 
-let lastDetectedCode = "";
-let lastDetectedTime = 0;
+    const stopButton =
+        document.getElementById("stopButton");
 
+    const exportButton =
+        document.getElementById("exportButton");
 
-/* =========================================
-   DOM
-========================================= */
+    const clearButton =
+        document.getElementById("clearButton");
 
-const video =
-    document.getElementById("video");
+    const searchInput =
+        document.getElementById("searchInput");
 
-const startButton =
-    document.getElementById("startButton");
+    const historyList =
+        document.getElementById("historyList");
 
-const stopButton =
-    document.getElementById("stopButton");
+    const totalScanElement =
+        document.getElementById("totalScan");
 
-const cameraStatus =
-    document.getElementById("cameraStatus");
-
-const lastScan =
-    document.getElementById("lastScan");
-
-const lastScanBox =
-    document.getElementById("lastScanBox");
-
-const totalScan =
-    document.getElementById("totalScan");
-
-const uniqueScan =
-    document.getElementById("uniqueScan");
-
-const duplicateScan =
-    document.getElementById("duplicateScan");
-
-const historyList =
-    document.getElementById("historyList");
-
-const search =
-    document.getElementById("search");
-
-const exportButton =
-    document.getElementById("exportButton");
-
-const clearButton =
-    document.getElementById("clearButton");
+    const uniqueScanElement =
+        document.getElementById("uniqueScan");
 
 
-/* =========================================
-   LOAD HISTORY
-========================================= */
+    /*
+     * ============================================================
+     * VARIABLES
+     * ============================================================
+     */
 
-function loadHistory() {
+    const STORAGE_KEY = "resiScannerHistory";
 
-    try {
+    // Jeda agar barcode yang sama tidak terbaca berkali-kali
+    // dalam waktu sangat cepat.
+    const SCAN_COOLDOWN = 1500;
 
-        const saved =
-            localStorage.getItem(
-                "resiScannerHistory"
-            );
+    let codeReader = null;
 
-        if (saved) {
+    let scanning = false;
+
+    let currentControls = null;
+
+    let history = [];
+
+    let lastDetectedBarcode = "";
+
+    let lastDetectedTime = 0;
+
+
+    /*
+     * ============================================================
+     * LOAD HISTORY
+     * ============================================================
+     *
+     * Sekalian membersihkan duplicate dari versi lama aplikasi.
+     */
+
+    function loadHistory() {
+
+        try {
+
+            const saved =
+                localStorage.getItem(STORAGE_KEY);
+
+            if (!saved) {
+
+                history = [];
+
+                renderHistory();
+
+                updateStatistics();
+
+                return;
+            }
 
             const parsed =
                 JSON.parse(saved);
 
-            if (Array.isArray(parsed)) {
-                history = parsed;
+            if (!Array.isArray(parsed)) {
+
+                history = [];
+
+                saveHistory();
+
+                renderHistory();
+
+                updateStatistics();
+
+                return;
             }
 
-        }
+            const seen = new Set();
 
-    } catch (error) {
+            const cleanedHistory = [];
 
-        console.error(
-            "Gagal load history:",
-            error
-        );
+            for (const item of parsed) {
 
-        history = [];
+                let barcode = "";
 
-    }
+                let timestamp = null;
 
-    renderHistory();
-    updateStatistics();
 
-}
+                /*
+                 * Support format lama:
+                 *
+                 * {
+                 *   barcode: "...",
+                 *   timestamp: "..."
+                 * }
+                 *
+                 * maupun:
+                 *
+                 * "SPXID..."
+                 */
 
+                if (typeof item === "string") {
 
-/* =========================================
-   SAVE HISTORY
-========================================= */
+                    barcode = item.trim();
 
-function saveHistory() {
+                } else if (
+                    item &&
+                    typeof item === "object"
+                ) {
 
-    try {
+                    barcode =
+                        String(
+                            item.barcode || ""
+                        ).trim();
 
-        localStorage.setItem(
-            "resiScannerHistory",
-            JSON.stringify(history)
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Gagal menyimpan history:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================
-   START SCANNER
-========================================= */
-
-async function startScanner() {
-
-    if (scanning) {
-        return;
-    }
-
-
-    /*
-     * Kamera membutuhkan HTTPS
-     */
-
-    if (
-        !window.isSecureContext &&
-        location.hostname !== "localhost" &&
-        location.hostname !== "127.0.0.1"
-    ) {
-
-        alert(
-            "Akses kamera membutuhkan HTTPS.\n\n" +
-            "Buka website menggunakan https://"
-        );
-
-        return;
-
-    }
-
-
-    /*
-     * Cek API kamera
-     */
-
-    if (
-        !navigator.mediaDevices ||
-        !navigator.mediaDevices.getUserMedia
-    ) {
-
-        alert(
-            "Browser ini tidak mendukung akses kamera."
-        );
-
-        return;
-
-    }
-
-
-    try {
-
-        setCameraStatus(
-            "Meminta izin kamera...",
-            false
-        );
-
-
-        /*
-         * LANGSUNG MINTA KAMERA
-         *
-         * Ini akan memunculkan popup permission
-         * jika user belum pernah memilih Allow/Block.
-         */
-
-        const stream =
-            await navigator.mediaDevices.getUserMedia({
-
-                video: {
-
-                    facingMode: {
-                        ideal: "environment"
-                    },
-
-                    width: {
-                        ideal: 1920
-                    },
-
-                    height: {
-                        ideal: 1080
-                    }
-
-                },
-
-                audio: false
-
-            });
-
-
-        /*
-         * Gunakan kamera yang SUDAH dibuka.
-         *
-         * Ini menghindari masalah:
-         * - device belum terbaca
-         * - label kamera kosong sebelum permission
-         * - permission diminta dua kali
-         */
-
-        video.srcObject = stream;
-
-        await video.play();
-
-
-        /*
-         * Buat scanner
-         */
-
-        codeReader =
-            new BrowserMultiFormatReader();
-
-
-        scanning = true;
-
-        startButton.disabled = true;
-        stopButton.disabled = false;
-
-
-        setCameraStatus(
-            "Kamera aktif - siap scan",
-            true
-        );
-
-
-        /*
-         * CONTINUOUS SCANNING
-         *
-         * decodeFromVideoElement akan terus
-         * membaca video selama scanner aktif.
-         */
-
-        currentControls =
-            await codeReader.decodeFromVideoElement(
-                video,
-                (result, error) => {
-
-                    if (!scanning) {
-                        return;
-                    }
-
-
-                    if (result) {
-
-                        const barcode =
-                            result.getText();
-
-                        processBarcode(
-                            barcode
-                        );
-
-                    }
-
-
-                    /*
-                     * Error "NotFoundException"
-                     * normal terjadi ketika belum ada
-                     * barcode di kamera.
-                     *
-                     * Karena itu tidak perlu alert.
-                     */
-
+                    timestamp =
+                        item.timestamp || null;
                 }
-            );
 
 
-    } catch (error) {
-
-        console.error(
-            "Scanner error:",
-            error
-        );
+                if (!barcode) {
+                    continue;
+                }
 
 
-        scanning = false;
+                /*
+                 * Kalau barcode sudah pernah ditemukan,
+                 * jangan masukkan lagi.
+                 */
 
-        startButton.disabled = false;
-        stopButton.disabled = true;
+                if (seen.has(barcode)) {
+                    continue;
+                }
 
-
-        stopVideoStream();
-
-
-        if (
-            error.name === "NotAllowedError" ||
-            error.name === "SecurityError"
-        ) {
-
-            setCameraStatus(
-                "Izin kamera ditolak",
-                false
-            );
-
-            alert(
-                "Izin kamera ditolak.\n\n" +
-                "Silakan izinkan akses kamera " +
-                "di pengaturan browser."
-            );
-
-        }
-
-        else if (
-            error.name === "NotFoundError"
-        ) {
-
-            setCameraStatus(
-                "Kamera tidak ditemukan",
-                false
-            );
-
-            alert(
-                "Tidak ada kamera yang ditemukan."
-            );
-
-        }
-
-        else if (
-            error.name === "NotReadableError"
-        ) {
-
-            setCameraStatus(
-                "Kamera sedang digunakan",
-                false
-            );
-
-            alert(
-                "Kamera sedang digunakan " +
-                "oleh aplikasi atau browser lain."
-            );
-
-        }
-
-        else {
-
-            setCameraStatus(
-                "Gagal membuka scanner",
-                false
-            );
-
-            alert(
-                "Gagal membuka scanner.\n\n" +
-                error.message
-            );
-
-        }
-
-    }
-
-}
+                seen.add(barcode);
 
 
-/* =========================================
-   STOP SCANNER
-========================================= */
+                cleanedHistory.push({
 
-function stopScanner() {
+                    barcode: barcode,
 
-    scanning = false;
+                    timestamp:
+                        timestamp ||
+                        new Date().toISOString()
 
+                });
 
-    /*
-     * Stop ZXing
-     */
+            }
 
-    if (currentControls) {
+            history = cleanedHistory;
 
-        try {
+            saveHistory();
 
-            currentControls.stop();
+            renderHistory();
+
+            updateStatistics();
 
         } catch (error) {
 
             console.error(
-                "Gagal stop scanner:",
+                "Gagal membaca history:",
                 error
             );
 
+            history = [];
+
+            saveHistory();
+
+            renderHistory();
+
+            updateStatistics();
         }
-
-        currentControls = null;
-
     }
 
 
     /*
-     * Reset reader
+     * ============================================================
+     * SAVE HISTORY
+     * ============================================================
      */
 
-    if (codeReader) {
+    function saveHistory() {
 
         try {
 
-            codeReader.reset();
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(history)
+            );
 
         } catch (error) {
 
-            console.error(error);
-
+            console.error(
+                "Gagal menyimpan history:",
+                error
+            );
         }
-
-        codeReader = null;
-
     }
 
 
     /*
-     * Stop kamera
+     * ============================================================
+     * UPDATE STATISTICS
+     * ============================================================
      */
 
-    stopVideoStream();
+    function updateStatistics() {
 
+        const total = history.length;
 
-    startButton.disabled = false;
-    stopButton.disabled = true;
+        totalScanElement.textContent =
+            total;
 
-
-    setCameraStatus(
-        "Kamera berhenti",
-        false
-    );
-
-}
-
-
-/* =========================================
-   STOP VIDEO STREAM
-========================================= */
-
-function stopVideoStream() {
-
-    if (video.srcObject) {
-
-        const stream =
-            video.srcObject;
-
-        if (
-            stream &&
-            typeof stream.getTracks === "function"
-        ) {
-
-            stream
-                .getTracks()
-                .forEach(track => {
-                    track.stop();
-                });
-
-        }
-
-        video.srcObject = null;
-
+        uniqueScanElement.textContent =
+            total;
     }
-
-}
-
-
-/* =========================================
-   PROCESS BARCODE
-========================================= */
-
-function processBarcode(barcode) {
-
-    barcode =
-        String(barcode || "").trim();
-
-
-    if (!barcode) {
-        return;
-    }
-
-
-    const now =
-        Date.now();
 
 
     /*
-     * Anti spam:
-     *
-     * Barcode yang sama tidak akan masuk lagi
-     * selama 1.5 detik.
+     * ============================================================
+     * FORMAT DATE
+     * ============================================================
      */
 
-    if (
-        barcode === lastDetectedCode &&
-        now - lastDetectedTime < SCAN_COOLDOWN
-    ) {
+    function formatDate(timestamp) {
 
-        return;
-
-    }
-
-
-    lastDetectedCode = barcode;
-    lastDetectedTime = now;
-
-
-    /*
-     * Cek apakah barcode sudah pernah ada
-     */
-
-    const isDuplicate =
-        history.some(
-            item => item.barcode === barcode
-        );
-
-
-    /*
-     * Masukkan ke Array
-     */
-
-    history.unshift({
-
-        barcode: barcode,
-
-        duplicate: isDuplicate,
-
-        timestamp:
-            new Date().toISOString()
-
-    });
-
-
-    saveHistory();
-
-
-    showLastScan(
-        barcode,
-        isDuplicate
-    );
-
-
-    renderHistory();
-
-
-    updateStatistics();
-
-
-    playBeep(
-        isDuplicate
-    );
-
-
-    if (navigator.vibrate) {
-
-        navigator.vibrate(
-            isDuplicate
-                ? [100, 70, 100]
-                : 80
-        );
-
-    }
-
-}
-
-
-/* =========================================
-   LAST SCAN
-========================================= */
-
-function showLastScan(
-    barcode,
-    isDuplicate
-) {
-
-    lastScanBox.classList.toggle(
-        "double",
-        isDuplicate
-    );
-
-
-    lastScan.textContent =
-        isDuplicate
-            ? "🔴 DOUBLE: " + barcode
-            : "🟢 BARU: " + barcode;
-
-}
-
-
-/* =========================================
-   RENDER HISTORY
-========================================= */
-
-function renderHistory() {
-
-    const keyword =
-        search.value
-            .trim()
-            .toLowerCase();
-
-
-    const filtered =
-        history.filter(item =>
-            item.barcode
-                .toLowerCase()
-                .includes(keyword)
-        );
-
-
-    if (filtered.length === 0) {
-
-        historyList.innerHTML =
-
-            '<div class="empty">' +
-
-            (
-                history.length === 0
-                    ? "Belum ada barcode yang discan."
-                    : "Nomor resi tidak ditemukan."
-            ) +
-
-            '</div>';
-
-        return;
-
-    }
-
-
-    historyList.innerHTML =
-        filtered.map(item => {
+        try {
 
             const date =
-                new Date(item.timestamp);
+                new Date(timestamp);
 
+            return date.toLocaleString(
+                "id-ID",
+                {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit"
+                }
+            );
 
-            const time =
-                date.toLocaleString(
-                    "id-ID",
-                    {
-                        dateStyle: "short",
-                        timeStyle: "medium"
-                    }
-                );
+        } catch (error) {
 
-
-            const safeBarcode =
-                escapeHTML(item.barcode);
-
-
-            return
-
-                '<div class="history-item">' +
-
-                    '<div class="status ' +
-
-                        (
-                            item.duplicate
-                                ? "status-double"
-                                : "status-new"
-                        ) +
-
-                    '"></div>' +
-
-                    '<div class="history-content">' +
-
-                        '<div class="history-barcode">' +
-
-                            safeBarcode +
-
-                        '</div>' +
-
-                        '<div class="history-time">' +
-
-                            time +
-
-                        '</div>' +
-
-                    '</div>' +
-
-                    '<div class="history-badge ' +
-
-                        (
-                            item.duplicate
-                                ? "badge-double"
-                                : "badge-new"
-                        ) +
-
-                    '">' +
-
-                        (
-                            item.duplicate
-                                ? "DOUBLE"
-                                : "BARU"
-                        ) +
-
-                    '</div>' +
-
-                '</div>';
-
-        }).join("");
-
-}
-
-
-/* =========================================
-   STATISTICS
-========================================= */
-
-function updateStatistics() {
-
-    const uniqueCount =
-        new Set(
-            history.map(
-                item => item.barcode
-            )
-        ).size;
-
-
-    const duplicateCount =
-        history.filter(
-            item => item.duplicate
-        ).length;
-
-
-    totalScan.textContent =
-        history.length;
-
-    uniqueScan.textContent =
-        uniqueCount;
-
-    duplicateScan.textContent =
-        duplicateCount;
-
-}
-
-
-/* =========================================
-   EXPORT CSV
-========================================= */
-
-function exportCSV() {
-
-    if (history.length === 0) {
-
-        alert(
-            "Belum ada data untuk diexport."
-        );
-
-        return;
-
+            return "-";
+        }
     }
 
 
-    let csv =
-        "No,Nomor Resi,Status,Waktu\n";
-
-
-    history
-        .slice()
-        .reverse()
-        .forEach((item, index) => {
-
-            const date =
-                new Date(item.timestamp);
-
-
-            const time =
-                date.toLocaleString("id-ID");
-
-
-            const barcode =
-                item.barcode.replace(
-                    /"/g,
-                    '""'
-                );
-
-
-            csv +=
-
-                (index + 1) + "," +
-
-                '"' + barcode + '",' +
-
-                (
-                    item.duplicate
-                        ? "DOUBLE"
-                        : "BARU"
-                ) + "," +
-
-                '"' + time + '"\n';
-
-        });
-
-
     /*
-     * BOM (\uFEFF)
-     * agar Excel membaca UTF-8 dengan benar.
+     * ============================================================
+     * RENDER HISTORY
+     * ============================================================
      */
 
-    const blob =
-        new Blob(
-            ["\uFEFF" + csv],
-            {
-                type:
-                    "text/csv;charset=utf-8"
+    function renderHistory() {
+
+        const keyword =
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        const filtered =
+            history.filter(item => {
+
+                return item.barcode
+                    .toLowerCase()
+                    .includes(keyword);
+
+            });
+
+
+        historyList.innerHTML = "";
+
+
+        if (filtered.length === 0) {
+
+            const empty =
+                document.createElement("div");
+
+            empty.className = "empty";
+
+            if (history.length === 0) {
+
+                empty.textContent =
+                    "Belum ada barcode yang discan.";
+
+            } else {
+
+                empty.textContent =
+                    "Barcode tidak ditemukan.";
             }
-        );
 
+            historyList.appendChild(empty);
 
-    const url =
-        URL.createObjectURL(blob);
-
-
-    const link =
-        document.createElement("a");
-
-
-    link.href = url;
-
-
-    link.download =
-        "history-resi-" +
-
-        new Date()
-            .toISOString()
-            .slice(0, 10) +
-
-        ".csv";
-
-
-    document.body.appendChild(link);
-
-
-    link.click();
-
-
-    document.body.removeChild(link);
-
-
-    URL.revokeObjectURL(url);
-
-}
-
-
-/* =========================================
-   CLEAR HISTORY
-========================================= */
-
-function clearHistory() {
-
-    if (history.length === 0) {
-
-        return;
-
-    }
-
-
-    if (
-        !confirm(
-            "Yakin ingin menghapus seluruh history scan?"
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    history = [];
-
-
-    lastDetectedCode = "";
-    lastDetectedTime = 0;
-
-
-    localStorage.removeItem(
-        "resiScannerHistory"
-    );
-
-
-    lastScan.textContent =
-        "Belum ada scan";
-
-
-    lastScanBox.classList.remove(
-        "double"
-    );
-
-
-    renderHistory();
-
-
-    updateStatistics();
-
-}
-
-
-/* =========================================
-   BEEP
-========================================= */
-
-function playBeep(isDuplicate) {
-
-    try {
-
-        const AudioContextClass =
-            window.AudioContext ||
-            window.webkitAudioContext;
-
-
-        if (!AudioContextClass) {
             return;
         }
 
 
-        const audioContext =
-            new AudioContextClass();
+        filtered.forEach(
+            (item, index) => {
+
+                const row =
+                    document.createElement("div");
+
+                row.className =
+                    "history-item";
 
 
-        const oscillator =
-            audioContext.createOscillator();
+                const number =
+                    document.createElement("div");
+
+                number.className =
+                    "history-number";
+
+                number.textContent =
+                    index + 1;
 
 
-        const gain =
-            audioContext.createGain();
+                const content =
+                    document.createElement("div");
+
+                content.className =
+                    "history-content";
 
 
-        oscillator.connect(gain);
+                const barcode =
+                    document.createElement("div");
+
+                barcode.className =
+                    "barcode";
+
+                barcode.textContent =
+                    item.barcode;
 
 
-        gain.connect(
-            audioContext.destination
+                const timestamp =
+                    document.createElement("div");
+
+                timestamp.className =
+                    "timestamp";
+
+                timestamp.textContent =
+                    formatDate(item.timestamp);
+
+
+                content.appendChild(barcode);
+
+                content.appendChild(timestamp);
+
+
+                const badge =
+                    document.createElement("div");
+
+                badge.className =
+                    "badge";
+
+                badge.textContent =
+                    "RESI";
+
+
+                row.appendChild(number);
+
+                row.appendChild(content);
+
+                row.appendChild(badge);
+
+
+                historyList.appendChild(row);
+
+            }
+        );
+    }
+
+
+    /*
+     * ============================================================
+     * SHOW LAST SCAN
+     * ============================================================
+     */
+
+    function showLastScanNew(barcode) {
+
+        lastBarcodeElement.textContent =
+            barcode;
+
+        lastMessageElement.textContent =
+            "🟢 RESI BARU — berhasil disimpan";
+
+        lastMessageElement.style.color =
+            "#16803c";
+    }
+
+
+    function showLastScanDuplicate(barcode) {
+
+        lastBarcodeElement.textContent =
+            barcode;
+
+        lastMessageElement.textContent =
+            "🔴 SUDAH ADA — tidak disimpan";
+
+        lastMessageElement.style.color =
+            "#d93025";
+    }
+
+
+    /*
+     * ============================================================
+     * SOUND
+     * ============================================================
+     */
+
+    function beep() {
+
+        try {
+
+            const AudioContext =
+                window.AudioContext ||
+                window.webkitAudioContext;
+
+            if (!AudioContext) {
+                return;
+            }
+
+            const audioContext =
+                new AudioContext();
+
+            const oscillator =
+                audioContext.createOscillator();
+
+            const gain =
+                audioContext.createGain();
+
+
+            oscillator.type = "sine";
+
+            oscillator.frequency.value = 900;
+
+            gain.gain.value = 0.15;
+
+
+            oscillator.connect(gain);
+
+            gain.connect(
+                audioContext.destination
+            );
+
+
+            oscillator.start();
+
+            oscillator.stop(
+                audioContext.currentTime + 0.12
+            );
+
+        } catch (error) {
+
+            console.log(
+                "Beep tidak tersedia."
+            );
+        }
+    }
+
+
+    /*
+     * ============================================================
+     * VIBRATION
+     * ============================================================
+     */
+
+    function vibrate() {
+
+        try {
+
+            if (
+                "vibrate" in navigator
+            ) {
+
+                navigator.vibrate(100);
+            }
+
+        } catch (error) {
+
+            // Tidak masalah kalau device tidak support.
+        }
+    }
+
+
+    /*
+     * ============================================================
+     * PROCESS BARCODE
+     * ============================================================
+     */
+
+    function processBarcode(rawBarcode) {
+
+        if (!rawBarcode) {
+            return;
+        }
+
+
+        const barcode =
+            String(rawBarcode).trim();
+
+
+        if (!barcode) {
+            return;
+        }
+
+
+        /*
+         * ========================================================
+         * COOLDOWN
+         * ========================================================
+         *
+         * Mencegah kamera membaca barcode yang sama berkali-kali
+         * dalam beberapa frame.
+         */
+
+        const now =
+            Date.now();
+
+        if (
+            barcode === lastDetectedBarcode &&
+            now - lastDetectedTime <
+                SCAN_COOLDOWN
+        ) {
+
+            return;
+        }
+
+        lastDetectedBarcode =
+            barcode;
+
+        lastDetectedTime =
+            now;
+
+
+        /*
+         * ========================================================
+         * CEK DUPLICATE
+         * ========================================================
+         *
+         * Barcode yang sudah ada di history:
+         *
+         * - Tidak ditambahkan
+         * - Tidak membuat entry baru
+         * - Hanya memberi notifikasi
+         */
+
+        const alreadyExists =
+            history.some(
+                item =>
+                    item.barcode === barcode
+            );
+
+
+        if (alreadyExists) {
+
+            showLastScanDuplicate(
+                barcode
+            );
+
+            beep();
+
+            vibrate();
+
+            return;
+        }
+
+
+        /*
+         * ========================================================
+         * BARCODE BARU
+         * ========================================================
+         */
+
+        const newItem = {
+
+            barcode: barcode,
+
+            timestamp:
+                new Date().toISOString()
+
+        };
+
+
+        /*
+         * unshift = barcode terbaru berada
+         * di posisi paling atas.
+         */
+
+        history.unshift(
+            newItem
         );
 
 
-        oscillator.frequency.value =
-            isDuplicate
-                ? 250
-                : 850;
+        saveHistory();
 
+        renderHistory();
 
-        gain.gain.setValueAtTime(
-            0.15,
-            audioContext.currentTime
+        updateStatistics();
+
+        showLastScanNew(
+            barcode
         );
 
+        beep();
 
-        oscillator.start();
+        vibrate();
+
+    }
 
 
-        oscillator.stop(
-            audioContext.currentTime + 0.12
+    /*
+     * ============================================================
+     * START CAMERA
+     * ============================================================
+     */
+
+    async function startScanner() {
+
+        if (scanning) {
+            return;
+        }
+
+
+        /*
+         * Browser harus menggunakan HTTPS atau localhost
+         * untuk camera access.
+         */
+
+        if (
+            !navigator.mediaDevices ||
+            !navigator.mediaDevices.getUserMedia
+        ) {
+
+            setStatus(
+                "Browser tidak mendukung kamera atau halaman belum HTTPS.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        try {
+
+            setStatus(
+                "Meminta izin kamera...",
+                "warning"
+            );
+
+
+            /*
+             * Minta permission kamera secara eksplisit.
+             */
+
+            const stream =
+                await navigator.mediaDevices.getUserMedia(
+                    {
+                        video: {
+                            facingMode: {
+                                ideal: "environment"
+                            }
+                        },
+                        audio: false
+                    }
+                );
+
+
+            /*
+             * Pasang stream ke video.
+             */
+
+            video.srcObject =
+                stream;
+
+
+            await video.play();
+
+
+            /*
+             * Buat ZXing reader.
+             */
+
+            codeReader =
+                new BrowserMultiFormatReader();
+
+
+            scanning = true;
+
+
+            startButton.disabled =
+                true;
+
+            stopButton.disabled =
+                false;
+
+
+            setStatus(
+                "🟢 Kamera aktif — arahkan barcode ke kotak.",
+                "ready"
+            );
+
+
+            /*
+             * Mulai decode secara continuous.
+             */
+
+            currentControls =
+                await codeReader.decodeFromVideoElement(
+                    video,
+                    (result, error) => {
+
+                        if (result) {
+
+                            const text =
+                                result.getText();
+
+                            processBarcode(
+                                text
+                            );
+                        }
+
+
+                        /*
+                         * Error decode seperti NotFoundException
+                         * adalah normal karena kamera terus mencari
+                         * barcode.
+                         *
+                         * Jadi tidak perlu ditampilkan ke user.
+                         */
+
+                    }
+                );
+
+
+        } catch (error) {
+
+            console.error(
+                "Camera error:",
+                error
+            );
+
+
+            scanning = false;
+
+            startButton.disabled =
+                false;
+
+            stopButton.disabled =
+                true;
+
+
+            if (
+                error.name ===
+                "NotAllowedError"
+            ) {
+
+                setStatus(
+                    "❌ Izin kamera ditolak. Izinkan kamera di browser.",
+                    "error"
+                );
+
+            } else if (
+                error.name ===
+                "NotFoundError"
+            ) {
+
+                setStatus(
+                    "❌ Kamera tidak ditemukan.",
+                    "error"
+                );
+
+            } else if (
+                error.name ===
+                "NotReadableError"
+            ) {
+
+                setStatus(
+                    "❌ Kamera sedang digunakan aplikasi lain.",
+                    "error"
+                );
+
+            } else {
+
+                setStatus(
+                    "❌ Gagal membuka kamera: " +
+                    error.message,
+                    "error"
+                );
+            }
+        }
+    }
+
+
+    /*
+     * ============================================================
+     * STOP CAMERA
+     * ============================================================
+     */
+
+    function stopScanner() {
+
+        scanning = false;
+
+
+        /*
+         * Stop ZXing.
+         */
+
+        try {
+
+            if (currentControls) {
+
+                currentControls.stop();
+
+                currentControls =
+                    null;
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Gagal stop ZXing:",
+                error
+            );
+        }
+
+
+        /*
+         * Reset reader.
+         */
+
+        try {
+
+            if (codeReader) {
+
+                codeReader.reset();
+
+                codeReader =
+                    null;
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Gagal reset reader:",
+                error
+            );
+        }
+
+
+        /*
+         * Stop semua camera tracks.
+         */
+
+        try {
+
+            if (video.srcObject) {
+
+                const tracks =
+                    video.srcObject.getTracks();
+
+                tracks.forEach(
+                    track => track.stop()
+                );
+
+                video.srcObject =
+                    null;
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Gagal stop camera:",
+                error
+            );
+        }
+
+
+        startButton.disabled =
+            false;
+
+        stopButton.disabled =
+            true;
+
+
+        setStatus(
+            "Kamera berhenti.",
+            ""
         );
+    }
 
 
-        oscillator.addEventListener(
-            "ended",
-            () => {
+    /*
+     * ============================================================
+     * STATUS
+     * ============================================================
+     */
 
-                audioContext.close();
+    function setStatus(
+        message,
+        type
+    ) {
+
+        statusElement.textContent =
+            message;
+
+        statusElement.className =
+            "status";
+
+
+        if (type) {
+
+            statusElement.classList.add(
+                type
+            );
+        }
+    }
+
+
+    /*
+     * ============================================================
+     * SEARCH
+     * ============================================================
+     */
+
+    searchInput.addEventListener(
+        "input",
+        () => {
+
+            renderHistory();
+
+        }
+    );
+
+
+    /*
+     * ============================================================
+     * EXPORT CSV
+     * ============================================================
+     */
+
+    function exportCSV() {
+
+        if (history.length === 0) {
+
+            alert(
+                "Belum ada data untuk diexport."
+            );
+
+            return;
+        }
+
+
+        let csv =
+            "No,Barcode,Timestamp\n";
+
+
+        history.forEach(
+            (item, index) => {
+
+                /*
+                 * Escape tanda kutip CSV.
+                 */
+
+                const barcode =
+                    String(item.barcode)
+                        .replace(
+                            /"/g,
+                            '""'
+                        );
+
+
+                csv +=
+                    `${index + 1},"${barcode}","${formatDate(item.timestamp)}"\n`;
 
             }
         );
 
 
-    } catch (error) {
+        const blob =
+            new Blob(
+                [csv],
+                {
+                    type:
+                        "text/csv;charset=utf-8;"
+                }
+            );
 
-        console.error(
-            "Beep error:",
-            error
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        const link =
+            document.createElement("a");
+
+
+        link.href =
+            url;
+
+        link.download =
+            "history-resi-" +
+            new Date()
+                .toISOString()
+                .slice(0, 10) +
+            ".csv";
+
+
+        document.body.appendChild(
+            link
         );
 
+        link.click();
+
+        document.body.removeChild(
+            link
+        );
+
+
+        URL.revokeObjectURL(
+            url
+        );
     }
 
-}
+
+    /*
+     * ============================================================
+     * CLEAR HISTORY
+     * ============================================================
+     */
+
+    function clearHistory() {
+
+        if (history.length === 0) {
+
+            alert(
+                "History sudah kosong."
+            );
+
+            return;
+        }
 
 
-/* =========================================
-   STATUS CAMERA
-========================================= */
-
-function setCameraStatus(
-    text,
-    online
-) {
-
-    cameraStatus.textContent =
-        text;
+        const confirmed =
+            confirm(
+                "Yakin ingin menghapus semua history scan?"
+            );
 
 
-    cameraStatus.className =
-        online
-            ? "online"
-            : "offline";
-
-}
+        if (!confirmed) {
+            return;
+        }
 
 
-/* =========================================
-   ESCAPE HTML
-========================================= */
-
-function escapeHTML(text) {
-
-    const div =
-        document.createElement("div");
+        history = [];
 
 
-    div.textContent =
-        text;
+        saveHistory();
+
+        renderHistory();
+
+        updateStatistics();
 
 
-    return div.innerHTML;
+        lastBarcodeElement.textContent =
+            "-";
 
-}
+        lastMessageElement.textContent =
+            "History telah dihapus";
 
-
-/* =========================================
-   EVENT LISTENERS
-========================================= */
-
-startButton.addEventListener(
-    "click",
-    startScanner
-);
+        lastMessageElement.style.color =
+            "#777";
+    }
 
 
-stopButton.addEventListener(
-    "click",
-    stopScanner
-);
+    /*
+     * ============================================================
+     * BUTTON EVENTS
+     * ============================================================
+     */
+
+    startButton.addEventListener(
+        "click",
+        startScanner
+    );
 
 
-search.addEventListener(
-    "input",
-    renderHistory
-);
+    stopButton.addEventListener(
+        "click",
+        stopScanner
+    );
 
 
-exportButton.addEventListener(
-    "click",
-    exportCSV
-);
+    exportButton.addEventListener(
+        "click",
+        exportCSV
+    );
 
 
-clearButton.addEventListener(
-    "click",
-    clearHistory
-);
+    clearButton.addEventListener(
+        "click",
+        clearHistory
+    );
 
 
-/*
- * Stop kamera ketika halaman ditutup.
- */
+    /*
+     * ============================================================
+     * INITIALIZE
+     * ============================================================
+     */
 
-window.addEventListener(
-    "beforeunload",
-    stopScanner
-);
+    loadHistory();
 
 
-/* =========================================
-   INITIALIZE
-========================================= */
+    /*
+     * ============================================================
+     * CLEANUP
+     * ============================================================
+     */
 
-loadHistory();
+    window.addEventListener(
+        "beforeunload",
+        () => {
+
+            stopScanner();
+
+        }
+    );
 
 </script>
 
