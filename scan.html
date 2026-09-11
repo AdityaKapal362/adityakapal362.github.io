@@ -2,9 +2,12 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Resi Barcode Scanner</title>
+    <title>Resi Scanner</title>
 
     <style>
         * {
@@ -31,7 +34,7 @@
             font-size: 28px;
         }
 
-        .scanner-card {
+        .card {
             background: white;
             border-radius: 16px;
             padding: 15px;
@@ -54,24 +57,53 @@
             display: block;
         }
 
+        /*
+         * Area scan dibuat lebar supaya barcode panjang
+         * lebih mudah masuk ke dalam frame.
+         */
         .scanner-frame {
             position: absolute;
-            top: 50%;
             left: 50%;
-            width: 75%;
-            height: 25%;
+            top: 50%;
+            width: 90%;
+            height: 35%;
             transform: translate(-50%, -50%);
             border: 3px solid #00ff66;
             border-radius: 10px;
             pointer-events: none;
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
+            box-shadow:
+                0 0 15px rgba(0, 255, 102, 0.4);
+        }
+
+        .scanner-line {
+            position: absolute;
+            left: 5%;
+            width: 90%;
+            height: 2px;
+            background: #00ff66;
+            top: 50%;
+            animation: scanLine 2s linear infinite;
+        }
+
+        @keyframes scanLine {
+            0% {
+                transform: translateY(-50px);
+            }
+
+            50% {
+                transform: translateY(50px);
+            }
+
+            100% {
+                transform: translateY(-50px);
+            }
         }
 
         .status {
             text-align: center;
             margin-top: 12px;
-            font-weight: bold;
             min-height: 24px;
+            font-weight: bold;
         }
 
         .status.ready {
@@ -106,6 +138,11 @@
             transform: scale(0.98);
         }
 
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         #startButton {
             background: #16803c;
             color: white;
@@ -126,11 +163,6 @@
             color: white;
         }
 
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
         .last-scan {
             margin-top: 15px;
             padding: 15px;
@@ -141,8 +173,8 @@
         }
 
         .last-scan-title {
-            font-size: 13px;
             color: #666;
+            font-size: 13px;
             margin-bottom: 5px;
         }
 
@@ -170,7 +202,8 @@
             padding: 15px;
             border-radius: 12px;
             text-align: center;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+            box-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.06);
         }
 
         .stat-number {
@@ -189,14 +222,11 @@
             background: white;
             border-radius: 16px;
             padding: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
         .history-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
             margin-bottom: 12px;
         }
 
@@ -273,7 +303,6 @@
             border-radius: 6px;
             font-size: 11px;
             font-weight: bold;
-            white-space: nowrap;
         }
 
         .empty {
@@ -291,6 +320,7 @@
         }
 
         @media (max-width: 600px) {
+
             .container {
                 padding: 12px;
             }
@@ -303,17 +333,13 @@
                 flex-direction: column;
             }
 
-            .history-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .history-item {
-                align-items: flex-start;
-            }
-
             .badge {
                 display: none;
+            }
+
+            .scanner-frame {
+                width: 94%;
+                height: 32%;
             }
         }
     </style>
@@ -325,25 +351,43 @@
 
     <h1>📦 Resi Barcode Scanner</h1>
 
-    <div class="scanner-card">
+    <div class="card">
 
         <div class="video-container">
-            <video id="video" autoplay muted playsinline></video>
-            <div class="scanner-frame"></div>
+
+            <video
+                id="video"
+                autoplay
+                muted
+                playsinline
+            ></video>
+
+            <div class="scanner-frame">
+                <div class="scanner-line"></div>
+            </div>
+
         </div>
 
-        <div id="status" class="status">
+        <div
+            id="status"
+            class="status"
+        >
             Kamera belum dimulai
         </div>
 
         <div class="buttons">
+
             <button id="startButton">
                 ▶ Mulai Scan
             </button>
 
-            <button id="stopButton" disabled>
+            <button
+                id="stopButton"
+                disabled
+            >
                 ⏹ Stop
             </button>
+
         </div>
 
         <div class="last-scan">
@@ -364,29 +408,41 @@
 
     </div>
 
+
     <div class="stats">
 
         <div class="stat">
-            <div id="totalScan" class="stat-number">
+
+            <div
+                id="totalScan"
+                class="stat-number"
+            >
                 0
             </div>
 
             <div class="stat-label">
                 Total Resi
             </div>
+
         </div>
 
         <div class="stat">
-            <div id="uniqueScan" class="stat-number">
+
+            <div
+                id="uniqueScan"
+                class="stat-number"
+            >
                 0
             </div>
 
             <div class="stat-label">
                 Resi Unik
             </div>
+
         </div>
 
     </div>
+
 
     <div class="history-card">
 
@@ -402,9 +458,11 @@
         >
 
         <div id="historyList">
+
             <div class="empty">
                 Belum ada barcode yang discan.
             </div>
+
         </div>
 
         <div class="buttons">
@@ -421,10 +479,17 @@
 
     </div>
 
+
     <div class="info">
-        Barcode yang sudah pernah discan tidak akan disimpan lagi.
+
+        Mendukung QR Code dan berbagai barcode 1D
+        seperti Code 128, Code 39, ITF, EAN, dan UPC.
+
         <br>
-        Data tersimpan otomatis di browser perangkat ini.
+
+        Barcode yang sudah pernah discan
+        tidak akan disimpan lagi.
+
     </div>
 
 </div>
@@ -434,13 +499,20 @@
 
     /*
      * ============================================================
-     * ZXING IMPORT
+     * IMPORT ZXING
      * ============================================================
      */
 
     import {
         BrowserMultiFormatReader
-    } from "https://cdn.jsdelivr.net/npm/@zxing/browser@0.1.5/+esm";
+    } from
+        "https://cdn.jsdelivr.net/npm/@zxing/browser@0.1.5/+esm";
+
+    import {
+        BarcodeFormat,
+        DecodeHintType
+    } from
+        "https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/+esm";
 
 
     /*
@@ -449,7 +521,8 @@
      * ============================================================
      */
 
-    const video = document.getElementById("video");
+    const video =
+        document.getElementById("video");
 
     const statusElement =
         document.getElementById("status");
@@ -487,15 +560,75 @@
 
     /*
      * ============================================================
-     * VARIABLES
+     * CONFIGURATION
      * ============================================================
      */
 
-    const STORAGE_KEY = "resiScannerHistory";
+    const STORAGE_KEY =
+        "resiScannerHistory";
 
-    // Jeda agar barcode yang sama tidak terbaca berkali-kali
-    // dalam waktu sangat cepat.
-    const SCAN_COOLDOWN = 1500;
+    const SCAN_COOLDOWN =
+        1500;
+
+
+    /*
+     * ============================================================
+     * BARCODE FORMAT
+     * ============================================================
+     *
+     * QR tetap aktif.
+     *
+     * Barcode panjang / 1D:
+     *
+     * CODE_128
+     * CODE_39
+     * ITF
+     * ITF_14
+     * EAN_13
+     * EAN_8
+     * UPC_A
+     * UPC_E
+     *
+     * RSS_14 dan RSS_EXPANDED juga dimasukkan
+     * untuk kompatibilitas label tertentu.
+     */
+
+    const hints =
+        new Map();
+
+    hints.set(
+        DecodeHintType.POSSIBLE_FORMATS,
+        [
+
+            // QR
+            BarcodeFormat.QR_CODE,
+
+            // Barcode 1D umum
+            BarcodeFormat.CODE_128,
+            BarcodeFormat.CODE_39,
+
+            BarcodeFormat.ITF,
+            BarcodeFormat.ITF_14,
+
+            BarcodeFormat.EAN_13,
+            BarcodeFormat.EAN_8,
+
+            BarcodeFormat.UPC_A,
+            BarcodeFormat.UPC_E,
+
+            // Barcode tambahan
+            BarcodeFormat.RSS_14,
+            BarcodeFormat.RSS_EXPANDED
+
+        ]
+    );
+
+
+    /*
+     * ============================================================
+     * SCANNER VARIABLES
+     * ============================================================
+     */
 
     let codeReader = null;
 
@@ -514,8 +647,6 @@
      * ============================================================
      * LOAD HISTORY
      * ============================================================
-     *
-     * Sekalian membersihkan duplicate dari versi lama aplikasi.
      */
 
     function loadHistory() {
@@ -523,21 +654,24 @@
         try {
 
             const saved =
-                localStorage.getItem(STORAGE_KEY);
+                localStorage.getItem(
+                    STORAGE_KEY
+                );
 
             if (!saved) {
 
                 history = [];
 
                 renderHistory();
-
                 updateStatistics();
 
                 return;
             }
 
+
             const parsed =
                 JSON.parse(saved);
+
 
             if (!Array.isArray(parsed)) {
 
@@ -546,15 +680,23 @@
                 saveHistory();
 
                 renderHistory();
-
                 updateStatistics();
 
                 return;
             }
 
-            const seen = new Set();
 
-            const cleanedHistory = [];
+            /*
+             * Bersihkan duplicate dari
+             * versi website sebelumnya.
+             */
+
+            const seen =
+                new Set();
+
+            const cleaned =
+                [];
+
 
             for (const item of parsed) {
 
@@ -563,26 +705,18 @@
                 let timestamp = null;
 
 
-                /*
-                 * Support format lama:
-                 *
-                 * {
-                 *   barcode: "...",
-                 *   timestamp: "..."
-                 * }
-                 *
-                 * maupun:
-                 *
-                 * "SPXID..."
-                 */
+                if (
+                    typeof item ===
+                    "string"
+                ) {
 
-                if (typeof item === "string") {
-
-                    barcode = item.trim();
+                    barcode =
+                        item.trim();
 
                 } else if (
                     item &&
-                    typeof item === "object"
+                    typeof item ===
+                    "object"
                 ) {
 
                     barcode =
@@ -591,7 +725,7 @@
                         ).trim();
 
                     timestamp =
-                        item.timestamp || null;
+                        item.timestamp;
                 }
 
 
@@ -600,19 +734,18 @@
                 }
 
 
-                /*
-                 * Kalau barcode sudah pernah ditemukan,
-                 * jangan masukkan lagi.
-                 */
+                if (
+                    seen.has(barcode)
+                ) {
 
-                if (seen.has(barcode)) {
                     continue;
                 }
+
 
                 seen.add(barcode);
 
 
-                cleanedHistory.push({
+                cleaned.push({
 
                     barcode: barcode,
 
@@ -624,7 +757,10 @@
 
             }
 
-            history = cleanedHistory;
+
+            history =
+                cleaned;
+
 
             saveHistory();
 
@@ -635,7 +771,7 @@
         } catch (error) {
 
             console.error(
-                "Gagal membaca history:",
+                "Load history error:",
                 error
             );
 
@@ -668,7 +804,7 @@
         } catch (error) {
 
             console.error(
-                "Gagal menyimpan history:",
+                "Save history error:",
                 error
             );
         }
@@ -677,13 +813,14 @@
 
     /*
      * ============================================================
-     * UPDATE STATISTICS
+     * STATISTICS
      * ============================================================
      */
 
     function updateStatistics() {
 
-        const total = history.length;
+        const total =
+            history.length;
 
         totalScanElement.textContent =
             total;
@@ -695,7 +832,7 @@
 
     /*
      * ============================================================
-     * FORMAT DATE
+     * DATE
      * ============================================================
      */
 
@@ -703,10 +840,9 @@
 
         try {
 
-            const date =
-                new Date(timestamp);
-
-            return date.toLocaleString(
+            return new Date(
+                timestamp
+            ).toLocaleString(
                 "id-ID",
                 {
                     day: "2-digit",
@@ -740,37 +876,40 @@
 
 
         const filtered =
-            history.filter(item => {
-
-                return item.barcode
-                    .toLowerCase()
-                    .includes(keyword);
-
-            });
-
-
-        historyList.innerHTML = "";
+            history.filter(
+                item =>
+                    item.barcode
+                        .toLowerCase()
+                        .includes(keyword)
+            );
 
 
-        if (filtered.length === 0) {
+        historyList.innerHTML =
+            "";
+
+
+        if (
+            filtered.length === 0
+        ) {
 
             const empty =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
-            empty.className = "empty";
+            empty.className =
+                "empty";
 
-            if (history.length === 0) {
 
-                empty.textContent =
-                    "Belum ada barcode yang discan.";
+            empty.textContent =
+                history.length === 0
+                    ? "Belum ada barcode yang discan."
+                    : "Barcode tidak ditemukan.";
 
-            } else {
 
-                empty.textContent =
-                    "Barcode tidak ditemukan.";
-            }
-
-            historyList.appendChild(empty);
+            historyList.appendChild(
+                empty
+            );
 
             return;
         }
@@ -780,14 +919,18 @@
             (item, index) => {
 
                 const row =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
 
                 row.className =
                     "history-item";
 
 
                 const number =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
 
                 number.className =
                     "history-number";
@@ -797,14 +940,18 @@
 
 
                 const content =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
 
                 content.className =
                     "history-content";
 
 
                 const barcode =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
 
                 barcode.className =
                     "barcode";
@@ -814,22 +961,32 @@
 
 
                 const timestamp =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
 
                 timestamp.className =
                     "timestamp";
 
                 timestamp.textContent =
-                    formatDate(item.timestamp);
+                    formatDate(
+                        item.timestamp
+                    );
 
 
-                content.appendChild(barcode);
+                content.appendChild(
+                    barcode
+                );
 
-                content.appendChild(timestamp);
+                content.appendChild(
+                    timestamp
+                );
 
 
                 const badge =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
 
                 badge.className =
                     "badge";
@@ -838,14 +995,22 @@
                     "RESI";
 
 
-                row.appendChild(number);
+                row.appendChild(
+                    number
+                );
 
-                row.appendChild(content);
+                row.appendChild(
+                    content
+                );
 
-                row.appendChild(badge);
+                row.appendChild(
+                    badge
+                );
 
 
-                historyList.appendChild(row);
+                historyList.appendChild(
+                    row
+                );
 
             }
         );
@@ -854,11 +1019,13 @@
 
     /*
      * ============================================================
-     * SHOW LAST SCAN
+     * LAST SCAN DISPLAY
      * ============================================================
      */
 
-    function showLastScanNew(barcode) {
+    function showNewBarcode(
+        barcode
+    ) {
 
         lastBarcodeElement.textContent =
             barcode;
@@ -871,7 +1038,9 @@
     }
 
 
-    function showLastScanDuplicate(barcode) {
+    function showDuplicateBarcode(
+        barcode
+    ) {
 
         lastBarcodeElement.textContent =
             barcode;
@@ -886,7 +1055,7 @@
 
     /*
      * ============================================================
-     * SOUND
+     * BEEP
      * ============================================================
      */
 
@@ -898,28 +1067,37 @@
                 window.AudioContext ||
                 window.webkitAudioContext;
 
+
             if (!AudioContext) {
                 return;
             }
 
+
             const audioContext =
                 new AudioContext();
 
+
             const oscillator =
                 audioContext.createOscillator();
+
 
             const gain =
                 audioContext.createGain();
 
 
-            oscillator.type = "sine";
+            oscillator.type =
+                "sine";
 
-            oscillator.frequency.value = 900;
+            oscillator.frequency.value =
+                900;
 
-            gain.gain.value = 0.15;
+            gain.gain.value =
+                0.15;
 
 
-            oscillator.connect(gain);
+            oscillator.connect(
+                gain
+            );
 
             gain.connect(
                 audioContext.destination
@@ -928,14 +1106,16 @@
 
             oscillator.start();
 
+
             oscillator.stop(
-                audioContext.currentTime + 0.12
+                audioContext.currentTime +
+                0.12
             );
 
         } catch (error) {
 
             console.log(
-                "Beep tidak tersedia."
+                "Beep unavailable"
             );
         }
     }
@@ -955,12 +1135,14 @@
                 "vibrate" in navigator
             ) {
 
-                navigator.vibrate(100);
+                navigator.vibrate(
+                    100
+                );
             }
 
         } catch (error) {
 
-            // Tidak masalah kalau device tidak support.
+            // Device tidak support vibration.
         }
     }
 
@@ -971,7 +1153,9 @@
      * ============================================================
      */
 
-    function processBarcode(rawBarcode) {
+    function processBarcode(
+        rawBarcode
+    ) {
 
         if (!rawBarcode) {
             return;
@@ -979,7 +1163,9 @@
 
 
         const barcode =
-            String(rawBarcode).trim();
+            String(
+                rawBarcode
+            ).trim();
 
 
         if (!barcode) {
@@ -988,25 +1174,26 @@
 
 
         /*
-         * ========================================================
-         * COOLDOWN
-         * ========================================================
-         *
-         * Mencegah kamera membaca barcode yang sama berkali-kali
-         * dalam beberapa frame.
+         * Hindari callback kamera yang
+         * membaca barcode yang sama
+         * berkali-kali dalam waktu dekat.
          */
 
         const now =
             Date.now();
 
+
         if (
-            barcode === lastDetectedBarcode &&
-            now - lastDetectedTime <
+            barcode ===
+                lastDetectedBarcode &&
+            now -
+                lastDetectedTime <
                 SCAN_COOLDOWN
         ) {
 
             return;
         }
+
 
         lastDetectedBarcode =
             barcode;
@@ -1016,27 +1203,20 @@
 
 
         /*
-         * ========================================================
-         * CEK DUPLICATE
-         * ========================================================
-         *
-         * Barcode yang sudah ada di history:
-         *
-         * - Tidak ditambahkan
-         * - Tidak membuat entry baru
-         * - Hanya memberi notifikasi
+         * CEK APAKAH SUDAH ADA.
          */
 
         const alreadyExists =
             history.some(
                 item =>
-                    item.barcode === barcode
+                    item.barcode ===
+                    barcode
             );
 
 
         if (alreadyExists) {
 
-            showLastScanDuplicate(
+            showDuplicateBarcode(
                 barcode
             );
 
@@ -1049,29 +1229,18 @@
 
 
         /*
-         * ========================================================
-         * BARCODE BARU
-         * ========================================================
+         * BARCODE BARU.
          */
 
-        const newItem = {
+        history.unshift({
 
-            barcode: barcode,
+            barcode:
+                barcode,
 
             timestamp:
                 new Date().toISOString()
 
-        };
-
-
-        /*
-         * unshift = barcode terbaru berada
-         * di posisi paling atas.
-         */
-
-        history.unshift(
-            newItem
-        );
+        });
 
 
         saveHistory();
@@ -1080,20 +1249,46 @@
 
         updateStatistics();
 
-        showLastScanNew(
+        showNewBarcode(
             barcode
         );
 
         beep();
 
         vibrate();
-
     }
 
 
     /*
      * ============================================================
-     * START CAMERA
+     * STATUS
+     * ============================================================
+     */
+
+    function setStatus(
+        message,
+        type
+    ) {
+
+        statusElement.textContent =
+            message;
+
+        statusElement.className =
+            "status";
+
+
+        if (type) {
+
+            statusElement.classList.add(
+                type
+            );
+        }
+    }
+
+
+    /*
+     * ============================================================
+     * START SCANNER
      * ============================================================
      */
 
@@ -1105,17 +1300,17 @@
 
 
         /*
-         * Browser harus menggunakan HTTPS atau localhost
-         * untuk camera access.
+         * Pastikan browser support kamera.
          */
 
         if (
             !navigator.mediaDevices ||
-            !navigator.mediaDevices.getUserMedia
+            !navigator.mediaDevices
+                .getUserMedia
         ) {
 
             setStatus(
-                "Browser tidak mendukung kamera atau halaman belum HTTPS.",
+                "❌ Browser tidak mendukung kamera atau website belum HTTPS.",
                 "error"
             );
 
@@ -1126,30 +1321,48 @@
         try {
 
             setStatus(
-                "Meminta izin kamera...",
+                "📷 Meminta izin kamera...",
                 "warning"
             );
 
 
             /*
-             * Minta permission kamera secara eksplisit.
+             * Kamera belakang dengan resolusi tinggi.
+             *
+             * width 1920 / height 1080
+             * membantu barcode kecil/panjang.
              */
 
             const stream =
-                await navigator.mediaDevices.getUserMedia(
-                    {
+                await navigator.mediaDevices
+                    .getUserMedia({
+
                         video: {
+
                             facingMode: {
-                                ideal: "environment"
-                            }
+                                ideal:
+                                    "environment"
+                            },
+
+                            width: {
+                                ideal: 1920
+                            },
+
+                            height: {
+                                ideal: 1080
+                            },
+
+                            focusMode: "continuous"
+
                         },
+
                         audio: false
-                    }
-                );
+
+                    });
 
 
             /*
-             * Pasang stream ke video.
+             * Pasang kamera ke video.
              */
 
             video.srcObject =
@@ -1160,11 +1373,14 @@
 
 
             /*
-             * Buat ZXing reader.
+             * Buat decoder dengan hints
+             * barcode yang kita tentukan.
              */
 
             codeReader =
-                new BrowserMultiFormatReader();
+                new BrowserMultiFormatReader(
+                    hints
+                );
 
 
             scanning = true;
@@ -1178,41 +1394,49 @@
 
 
             setStatus(
-                "🟢 Kamera aktif — arahkan barcode ke kotak.",
+                "🟢 Scanner aktif — arahkan QR/barcode ke kotak.",
                 "ready"
             );
 
 
             /*
-             * Mulai decode secara continuous.
+             * Mulai continuous decoding.
              */
 
             currentControls =
-                await codeReader.decodeFromVideoElement(
-                    video,
-                    (result, error) => {
+                await codeReader
+                    .decodeFromVideoElement(
+                        video,
+                        (result, error) => {
 
-                        if (result) {
+                            /*
+                             * Kalau berhasil menemukan
+                             * QR/barcode.
+                             */
 
-                            const text =
-                                result.getText();
+                            if (result) {
 
-                            processBarcode(
-                                text
-                            );
+                                const text =
+                                    result.getText();
+
+                                processBarcode(
+                                    text
+                                );
+                            }
+
+
+                            /*
+                             * Error decoder di sini
+                             * biasanya hanya berarti
+                             * frame tersebut belum
+                             * menemukan barcode.
+                             *
+                             * Jangan tampilkan sebagai
+                             * error ke user.
+                             */
+
                         }
-
-
-                        /*
-                         * Error decode seperti NotFoundException
-                         * adalah normal karena kamera terus mencari
-                         * barcode.
-                         *
-                         * Jadi tidak perlu ditampilkan ke user.
-                         */
-
-                    }
-                );
+                    );
 
 
         } catch (error) {
@@ -1224,6 +1448,7 @@
 
 
             scanning = false;
+
 
             startButton.disabled =
                 false;
@@ -1276,7 +1501,7 @@
 
     /*
      * ============================================================
-     * STOP CAMERA
+     * STOP SCANNER
      * ============================================================
      */
 
@@ -1291,7 +1516,9 @@
 
         try {
 
-            if (currentControls) {
+            if (
+                currentControls
+            ) {
 
                 currentControls.stop();
 
@@ -1302,14 +1529,14 @@
         } catch (error) {
 
             console.error(
-                "Gagal stop ZXing:",
+                "ZXing stop error:",
                 error
             );
         }
 
 
         /*
-         * Reset reader.
+         * Reset decoder.
          */
 
         try {
@@ -1325,7 +1552,7 @@
         } catch (error) {
 
             console.error(
-                "Gagal reset reader:",
+                "ZXing reset error:",
                 error
             );
         }
@@ -1337,14 +1564,20 @@
 
         try {
 
-            if (video.srcObject) {
+            if (
+                video.srcObject
+            ) {
 
                 const tracks =
-                    video.srcObject.getTracks();
+                    video.srcObject
+                        .getTracks();
+
 
                 tracks.forEach(
-                    track => track.stop()
+                    track =>
+                        track.stop()
                 );
+
 
                 video.srcObject =
                     null;
@@ -1353,7 +1586,7 @@
         } catch (error) {
 
             console.error(
-                "Gagal stop camera:",
+                "Camera stop error:",
                 error
             );
         }
@@ -1370,33 +1603,6 @@
             "Kamera berhenti.",
             ""
         );
-    }
-
-
-    /*
-     * ============================================================
-     * STATUS
-     * ============================================================
-     */
-
-    function setStatus(
-        message,
-        type
-    ) {
-
-        statusElement.textContent =
-            message;
-
-        statusElement.className =
-            "status";
-
-
-        if (type) {
-
-            statusElement.classList.add(
-                type
-            );
-        }
     }
 
 
@@ -1424,7 +1630,9 @@
 
     function exportCSV() {
 
-        if (history.length === 0) {
+        if (
+            history.length === 0
+        ) {
 
             alert(
                 "Belum ada data untuk diexport."
@@ -1441,16 +1649,13 @@
         history.forEach(
             (item, index) => {
 
-                /*
-                 * Escape tanda kutip CSV.
-                 */
-
                 const barcode =
-                    String(item.barcode)
-                        .replace(
-                            /"/g,
-                            '""'
-                        );
+                    String(
+                        item.barcode
+                    ).replace(
+                        /"/g,
+                        '""'
+                    );
 
 
                 csv +=
@@ -1477,7 +1682,9 @@
 
 
         const link =
-            document.createElement("a");
+            document.createElement(
+                "a"
+            );
 
 
         link.href =
@@ -1495,7 +1702,9 @@
             link
         );
 
+
         link.click();
+
 
         document.body.removeChild(
             link
@@ -1516,7 +1725,9 @@
 
     function clearHistory() {
 
-        if (history.length === 0) {
+        if (
+            history.length === 0
+        ) {
 
             alert(
                 "History sudah kosong."
