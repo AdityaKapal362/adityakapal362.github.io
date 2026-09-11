@@ -1,0 +1,1337 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="theme-color" content="#111827">
+
+    <title>Resi Scanner</title>
+
+    <!-- Barcode Scanner -->
+    <script src="https://unpkg.com/@zxing/browser@0.1.5/umd/index.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f3f4f6;
+            color: #111827;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 18px 16px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        header p {
+            margin: 6px 0 0;
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            margin: auto;
+            padding: 14px;
+        }
+
+        /* CAMERA */
+
+        .scanner-container {
+            position: relative;
+            background: black;
+            border-radius: 16px;
+            overflow: hidden;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+        }
+
+        #video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .scan-line {
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            top: 50%;
+            height: 2px;
+            background: #22c55e;
+            box-shadow: 0 0 10px #22c55e;
+            animation: scanLine 2s linear infinite;
+        }
+
+        @keyframes scanLine {
+            0% {
+                top: 25%;
+            }
+
+            50% {
+                top: 75%;
+            }
+
+            100% {
+                top: 25%;
+            }
+        }
+
+        .scanner-frame {
+            position: absolute;
+            width: 70%;
+            height: 45%;
+            left: 15%;
+            top: 27.5%;
+            border: 2px solid rgba(255,255,255,0.8);
+            border-radius: 10px;
+        }
+
+        /* BUTTON */
+
+        button {
+            border: none;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .camera-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .camera-buttons button {
+            flex: 1;
+        }
+
+        .btn-start {
+            background: #16a34a;
+            color: white;
+        }
+
+        .btn-stop {
+            background: #dc2626;
+            color: white;
+        }
+
+        .btn-clear {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        .btn-export {
+            background: #2563eb;
+            color: white;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* LAST SCAN */
+
+        .last-scan {
+            margin-top: 12px;
+            padding: 16px;
+            border-radius: 12px;
+            background: white;
+            border-left: 5px solid #16a34a;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .last-scan.double {
+            border-left-color: #dc2626;
+        }
+
+        .last-title {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .last-value {
+            font-size: 18px;
+            font-weight: bold;
+            word-break: break-all;
+        }
+
+        /* STATISTICS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .stat {
+            background: white;
+            padding: 14px 8px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .stat-number {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        /* HISTORY */
+
+        .history-box {
+            margin-top: 15px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .history-header {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .history-header h2 {
+            margin: 0 0 10px;
+            font-size: 17px;
+        }
+
+        #search {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 11px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        #search:focus {
+            border-color: #2563eb;
+        }
+
+        .history-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .status-new {
+            background: #16a34a;
+        }
+
+        .status-double {
+            background: #dc2626;
+        }
+
+        .history-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .history-barcode {
+            font-size: 14px;
+            font-weight: bold;
+            word-break: break-all;
+        }
+
+        .history-time {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 3px;
+        }
+
+        .history-badge {
+            font-size: 10px;
+            padding: 4px 7px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .badge-new {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-double {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .empty {
+            padding: 30px 15px;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .bottom-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        /* CAMERA STATUS */
+
+        .camera-status {
+            text-align: center;
+            padding: 9px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .online {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        .offline {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        @media (max-width: 400px) {
+
+            .stats {
+                gap: 5px;
+            }
+
+            .stat {
+                padding: 12px 5px;
+            }
+
+            .stat-number {
+                font-size: 19px;
+            }
+
+            .stat-label {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>📦 Resi Scanner</h1>
+    <p>Continuous Barcode Scanner</p>
+</header>
+
+<div class="container">
+
+    <!-- CAMERA -->
+
+    <div class="scanner-container">
+
+        <video id="video"
+               autoplay
+               muted
+               playsinline></video>
+
+        <div class="scanner-frame"></div>
+        <div class="scan-line"></div>
+
+    </div>
+
+    <div class="camera-status">
+        Status:
+        <span id="cameraStatus" class="offline">
+            Kamera belum aktif
+        </span>
+    </div>
+
+    <div class="camera-buttons">
+
+        <button
+            id="startButton"
+            class="btn-start"
+            onclick="startScanner()">
+            📷 Mulai Scan
+        </button>
+
+        <button
+            id="stopButton"
+            class="btn-stop"
+            onclick="stopScanner()"
+            disabled>
+            ⏹ Stop
+        </button>
+
+    </div>
+
+    <!-- LAST SCAN -->
+
+    <div id="lastScanBox" class="last-scan">
+
+        <div class="last-title">
+            HASIL SCAN TERAKHIR
+        </div>
+
+        <div id="lastScan"
+             class="last-value">
+            Belum ada scan
+        </div>
+
+    </div>
+
+    <!-- STATISTICS -->
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <div id="totalScan"
+                 class="stat-number">
+                0
+            </div>
+
+            <div class="stat-label">
+                TOTAL SCAN
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div id="uniqueScan"
+                 class="stat-number">
+                0
+            </div>
+
+            <div class="stat-label">
+                RESI UNIK
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div id="duplicateScan"
+                 class="stat-number">
+                0
+            </div>
+
+            <div class="stat-label">
+                DOUBLE
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- HISTORY -->
+
+    <div class="history-box">
+
+        <div class="history-header">
+
+            <h2>
+                📋 History Scan
+            </h2>
+
+            <input
+                type="text"
+                id="search"
+                placeholder="🔍 Cari nomor resi..."
+                oninput="renderHistory()">
+
+        </div>
+
+        <div id="historyList"
+             class="history-list">
+
+            <div class="empty">
+                Belum ada barcode yang discan.
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ACTION -->
+
+    <div class="bottom-buttons">
+
+        <button
+            class="btn-export"
+            onclick="exportCSV()">
+            📥 Export CSV
+        </button>
+
+        <button
+            class="btn-clear"
+            onclick="clearHistory()">
+            🗑️ Hapus History
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /*
+     * ========================================
+     * CONFIGURATION
+     * ========================================
+     */
+
+    const SCAN_COOLDOWN = 1200;
+
+    /*
+     * ========================================
+     * VARIABLES
+     * ========================================
+     */
+
+    let codeReader = null;
+
+    let scanning = false;
+
+    let history = [];
+
+    let lastDetectedCode = "";
+
+    let lastDetectedTime = 0;
+
+
+    /*
+     * ========================================
+     * LOAD HISTORY
+     * ========================================
+     */
+
+    function loadHistory() {
+
+        try {
+
+            const saved =
+                localStorage.getItem("resiHistory");
+
+            if (saved) {
+
+                history = JSON.parse(saved);
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Gagal membaca history:",
+                error
+            );
+
+            history = [];
+
+        }
+
+        renderHistory();
+        updateStatistics();
+    }
+
+
+    /*
+     * ========================================
+     * SAVE HISTORY
+     * ========================================
+     */
+
+    function saveHistory() {
+
+        localStorage.setItem(
+            "resiHistory",
+            JSON.stringify(history)
+        );
+
+    }
+
+
+    /*
+     * ========================================
+     * START SCANNER
+     * ========================================
+     */
+
+    async function startScanner() {
+
+        if (scanning) {
+            return;
+        }
+
+        try {
+
+            codeReader =
+                new ZXingBrowser.BrowserMultiFormatReader();
+
+            scanning = true;
+
+            document.getElementById(
+                "startButton"
+            ).disabled = true;
+
+            document.getElementById(
+                "stopButton"
+            ).disabled = false;
+
+            setCameraStatus(
+                "Kamera aktif",
+                true
+            );
+
+            const video =
+                document.getElementById("video");
+
+            /*
+             * Cari kamera belakang
+             */
+
+            const devices =
+                await ZXingBrowser.BrowserCodeReader
+                    .listVideoInputDevices();
+
+            let selectedDeviceId = null;
+
+            /*
+             * Prioritaskan kamera belakang
+             */
+
+            for (const device of devices) {
+
+                const label =
+                    device.label.toLowerCase();
+
+                if (
+                    label.includes("back") ||
+                    label.includes("rear") ||
+                    label.includes("environment")
+                ) {
+
+                    selectedDeviceId =
+                        device.deviceId;
+
+                    break;
+                }
+
+            }
+
+            /*
+             * Kalau tidak ditemukan,
+             * gunakan kamera pertama.
+             */
+
+            if (!selectedDeviceId &&
+                devices.length > 0) {
+
+                selectedDeviceId =
+                    devices[0].deviceId;
+
+            }
+
+            if (!selectedDeviceId) {
+
+                throw new Error(
+                    "Kamera tidak ditemukan."
+                );
+
+            }
+
+            /*
+             * CONTINUOUS SCAN
+             */
+
+            codeReader.decodeFromVideoDevice(
+                selectedDeviceId,
+                video,
+                (result, error) => {
+
+                    if (!scanning) {
+                        return;
+                    }
+
+                    if (result) {
+
+                        const text =
+                            result.getText();
+
+                        processBarcode(text);
+
+                    }
+
+                }
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            scanning = false;
+
+            document.getElementById(
+                "startButton"
+            ).disabled = false;
+
+            document.getElementById(
+                "stopButton"
+            ).disabled = true;
+
+            setCameraStatus(
+                "Gagal membuka kamera",
+                false
+            );
+
+            alert(
+                "Tidak dapat membuka kamera.\n\n" +
+                "Pastikan website menggunakan HTTPS " +
+                "dan izin kamera sudah diberikan."
+            );
+
+        }
+
+    }
+
+
+    /*
+     * ========================================
+     * STOP SCANNER
+     * ========================================
+     */
+
+    function stopScanner() {
+
+        scanning = false;
+
+        if (codeReader) {
+
+            try {
+
+                codeReader.reset();
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
+            codeReader = null;
+
+        }
+
+        const video =
+            document.getElementById("video");
+
+        if (video.srcObject) {
+
+            video.srcObject
+                .getTracks()
+                .forEach(track => track.stop());
+
+            video.srcObject = null;
+
+        }
+
+        document.getElementById(
+            "startButton"
+        ).disabled = false;
+
+        document.getElementById(
+            "stopButton"
+        ).disabled = true;
+
+        setCameraStatus(
+            "Kamera berhenti",
+            false
+        );
+
+    }
+
+
+    /*
+     * ========================================
+     * PROCESS BARCODE
+     * ========================================
+     */
+
+    function processBarcode(barcode) {
+
+        barcode = barcode.trim();
+
+        if (!barcode) {
+            return;
+        }
+
+        const now =
+            Date.now();
+
+        /*
+         * Jangan memasukkan barcode yang sama
+         * berulang-ulang selama cooldown.
+         *
+         * Ini berguna ketika barcode masih
+         * berada di depan kamera.
+         */
+
+        if (
+            barcode === lastDetectedCode &&
+            now - lastDetectedTime < SCAN_COOLDOWN
+        ) {
+
+            return;
+
+        }
+
+        lastDetectedCode = barcode;
+        lastDetectedTime = now;
+
+        /*
+         * Cek apakah sebelumnya sudah ada
+         */
+
+        const isDuplicate =
+            history.some(
+                item => item.barcode === barcode
+            );
+
+        /*
+         * Buat record baru
+         */
+
+        const item = {
+
+            barcode: barcode,
+
+            duplicate: isDuplicate,
+
+            timestamp: new Date().toISOString()
+
+        };
+
+        /*
+         * Masukkan ke history
+         */
+
+        history.unshift(item);
+
+        saveHistory();
+
+        /*
+         * Update UI
+         */
+
+        showLastScan(
+            barcode,
+            isDuplicate
+        );
+
+        renderHistory();
+
+        updateStatistics();
+
+        /*
+         * Bunyi scanner
+         */
+
+        playBeep(
+            isDuplicate
+        );
+
+        /*
+         * Getar HP
+         */
+
+        if (
+            navigator.vibrate
+        ) {
+
+            navigator.vibrate(
+                isDuplicate
+                    ? [100, 50, 100]
+                    : 100
+            );
+
+        }
+
+    }
+
+
+    /*
+     * ========================================
+     * LAST SCAN UI
+     * ========================================
+     */
+
+    function showLastScan(
+        barcode,
+        duplicate
+    ) {
+
+        const box =
+            document.getElementById(
+                "lastScanBox"
+            );
+
+        const text =
+            document.getElementById(
+                "lastScan"
+            );
+
+        box.classList.toggle(
+            "double",
+            duplicate
+        );
+
+        text.textContent =
+            (duplicate ? "🔴 DOUBLE: " : "🟢 ") +
+            barcode;
+
+    }
+
+
+    /*
+     * ========================================
+     * RENDER HISTORY
+     * ========================================
+     */
+
+    function renderHistory() {
+
+        const container =
+            document.getElementById(
+                "historyList"
+            );
+
+        const search =
+            document.getElementById(
+                "search"
+            ).value
+            .trim()
+            .toLowerCase();
+
+        let filtered =
+            history.filter(item =>
+                item.barcode
+                    .toLowerCase()
+                    .includes(search)
+            );
+
+        if (filtered.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty">
+                    ${
+                        history.length === 0
+                        ? "Belum ada barcode yang discan."
+                        : "Barcode tidak ditemukan."
+                    }
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML =
+            filtered.map(item => {
+
+                const date =
+                    new Date(
+                        item.timestamp
+                    );
+
+                const time =
+                    date.toLocaleTimeString(
+                        "id-ID",
+                        {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit"
+                        }
+                    );
+
+                return `
+
+                    <div class="history-item">
+
+                        <div class="
+                            status
+                            ${
+                                item.duplicate
+                                ? "status-double"
+                                : "status-new"
+                            }
+                        "></div>
+
+                        <div class="history-content">
+
+                            <div class="history-barcode">
+                                ${escapeHTML(
+                                    item.barcode
+                                )}
+                            </div>
+
+                            <div class="history-time">
+                                ${time}
+                            </div>
+
+                        </div>
+
+                        <div class="
+                            history-badge
+                            ${
+                                item.duplicate
+                                ? "badge-double"
+                                : "badge-new"
+                            }
+                        ">
+                            ${
+                                item.duplicate
+                                ? "DOUBLE"
+                                : "BARU"
+                            }
+                        </div>
+
+                    </div>
+
+                `;
+
+            }).join("");
+
+    }
+
+
+    /*
+     * ========================================
+     * STATISTICS
+     * ========================================
+     */
+
+    function updateStatistics() {
+
+        const unique =
+            new Set(
+                history.map(
+                    item => item.barcode
+                )
+            ).size;
+
+        const duplicate =
+            history.filter(
+                item => item.duplicate
+            ).length;
+
+        document.getElementById(
+            "totalScan"
+        ).textContent =
+            history.length;
+
+        document.getElementById(
+            "uniqueScan"
+        ).textContent =
+            unique;
+
+        document.getElementById(
+            "duplicateScan"
+        ).textContent =
+            duplicate;
+
+    }
+
+
+    /*
+     * ========================================
+     * CLEAR HISTORY
+     * ========================================
+     */
+
+    function clearHistory() {
+
+        if (history.length === 0) {
+
+            return;
+
+        }
+
+        const confirmDelete =
+            confirm(
+                "Hapus semua history scan?"
+            );
+
+        if (!confirmDelete) {
+            return;
+        }
+
+        history = [];
+
+        localStorage.removeItem(
+            "resiHistory"
+        );
+
+        document.getElementById(
+            "lastScan"
+        ).textContent =
+            "Belum ada scan";
+
+        document.getElementById(
+            "lastScanBox"
+        ).classList.remove(
+            "double"
+        );
+
+        renderHistory();
+        updateStatistics();
+
+    }
+
+
+    /*
+     * ========================================
+     * EXPORT CSV
+     * ========================================
+     */
+
+    function exportCSV() {
+
+        if (history.length === 0) {
+
+            alert(
+                "Belum ada data untuk diexport."
+            );
+
+            return;
+
+        }
+
+        let csv =
+            "No,Nomor Resi,Status,Waktu\n";
+
+        history
+            .slice()
+            .reverse()
+            .forEach((item, index) => {
+
+                const date =
+                    new Date(
+                        item.timestamp
+                    );
+
+                const time =
+                    date.toLocaleString(
+                        "id-ID"
+                    );
+
+                csv +=
+                    `${index + 1},` +
+                    `"${item.barcode.replace(
+                        /"/g,
+                        '""'
+                    )}",` +
+                    `${item.duplicate
+                        ? "DOUBLE"
+                        : "BARU"},` +
+                    `"${time}"\n`;
+
+            });
+
+        const blob =
+            new Blob(
+                [csv],
+                {
+                    type:
+                        "text/csv;charset=utf-8;"
+                }
+            );
+
+        const url =
+            URL.createObjectURL(blob);
+
+        const link =
+            document.createElement("a");
+
+        link.href = url;
+
+        link.download =
+            "history-resi-" +
+            new Date()
+                .toISOString()
+                .slice(0, 10) +
+            ".csv";
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+
+        URL.revokeObjectURL(url);
+
+    }
+
+
+    /*
+     * ========================================
+     * BEEP
+     * ========================================
+     */
+
+    function playBeep(
+        duplicate
+    ) {
+
+        try {
+
+            const AudioContext =
+                window.AudioContext ||
+                window.webkitAudioContext;
+
+            if (!AudioContext) {
+                return;
+            }
+
+            const audio =
+                new AudioContext();
+
+            const oscillator =
+                audio.createOscillator();
+
+            const gain =
+                audio.createGain();
+
+            oscillator.connect(
+                gain
+            );
+
+            gain.connect(
+                audio.destination
+            );
+
+            oscillator.frequency.value =
+                duplicate
+                ? 250
+                : 800;
+
+            gain.gain.value =
+                0.15;
+
+            oscillator.start();
+
+            oscillator.stop(
+                audio.currentTime +
+                0.12
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Audio error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /*
+     * ========================================
+     * CAMERA STATUS
+     * ========================================
+     */
+
+    function setCameraStatus(
+        text,
+        online
+    ) {
+
+        const status =
+            document.getElementById(
+                "cameraStatus"
+            );
+
+        status.textContent =
+            text;
+
+        status.className =
+            online
+            ? "online"
+            : "offline";
+
+    }
+
+
+    /*
+     * ========================================
+     * SECURITY
+     * ========================================
+     */
+
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            text;
+
+        return div.innerHTML;
+
+    }
+
+
+    /*
+     * ========================================
+     * INITIALIZE
+     * ========================================
+     */
+
+    loadHistory();
+
+</script>
+
+</body>
+</html>
+```
