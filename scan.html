@@ -598,182 +598,176 @@
      * ========================================
      */
 
-    async function startScanner() {
+async function startScanner() {
 
-        if (scanning) {
-            return;
-        }
-
-        try {
-
-            codeReader =
-                new ZXingBrowser.BrowserMultiFormatReader();
-
-            scanning = true;
-
-            document.getElementById(
-                "startButton"
-            ).disabled = true;
-
-            document.getElementById(
-                "stopButton"
-            ).disabled = false;
-
-            setCameraStatus(
-                "Kamera aktif",
-                true
-            );
-
-            const video =
-                document.getElementById("video");
-
-            /*
-             * Cari kamera belakang
-             */
-
-            const devices =
-                await ZXingBrowser.BrowserCodeReader
-                    .listVideoInputDevices();
-
-            let selectedDeviceId = null;
-
-            /*
-             * Prioritaskan kamera belakang
-             */
-
-            for (const device of devices) {
-
-                const label =
-                    device.label.toLowerCase();
-
-                if (
-                    label.includes("back") ||
-                    label.includes("rear") ||
-                    label.includes("environment")
-                ) {
-
-                    selectedDeviceId =
-                        device.deviceId;
-
-                    break;
-                }
-
-            }
-
-            /*
-             * Kalau tidak ditemukan,
-             * gunakan kamera pertama.
-             */
-
-            if (!selectedDeviceId &&
-                devices.length > 0) {
-
-                selectedDeviceId =
-                    devices[0].deviceId;
-
-            }
-
-            if (!selectedDeviceId) {
-
-                throw new Error(
-                    "Kamera tidak ditemukan."
-                );
-
-            }
-
-            /*
-             * CONTINUOUS SCAN
-             */
-
-            codeReader.decodeFromVideoDevice(
-                selectedDeviceId,
-                video,
-                (result, error) => {
-
-                    if (!scanning) {
-                        return;
-                    }
-
-                    if (result) {
-
-                        const text =
-                            result.getText();
-
-                        processBarcode(text);
-
-                    }
-
-                }
-            );
-
-        } catch (error) {
-
-            console.error(error);
-
-            scanning = false;
-
-            document.getElementById(
-                "startButton"
-            ).disabled = false;
-
-            document.getElementById(
-                "stopButton"
-            ).disabled = true;
-
-            setCameraStatus(
-                "Gagal membuka kamera",
-                false
-            );
-
-            alert(
-                "Tidak dapat membuka kamera.\n\n" +
-                "Pastikan website menggunakan HTTPS " +
-                "dan izin kamera sudah diberikan."
-            );
-
-        }
-
+    if (scanning) {
+        return;
     }
 
+    // Cek dukungan kamera
+    if (!navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia) {
 
-    /*
-     * ========================================
-     * STOP SCANNER
-     * ========================================
-     */
+        alert(
+            "Browser tidak mendukung akses kamera.\n\n" +
+            "Pastikan website dibuka menggunakan HTTPS."
+        );
 
-    function stopScanner() {
+        return;
+    }
 
-        scanning = false;
+    try {
 
-        if (codeReader) {
+        /*
+         * ========================================
+         * 1. MINTA IZIN KAMERA
+         * ========================================
+         */
 
-            try {
+        const permissionStream =
+            await navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: {
+                        ideal: "environment"
+                    }
+                },
+                audio: false
+            });
 
-                codeReader.reset();
+        /*
+         * Permission sudah diberikan.
+         *
+         * Matikan stream sementara karena
+         * ZXing akan membuka kamera sendiri.
+         */
 
-            } catch (error) {
+        permissionStream
+            .getTracks()
+            .forEach(track => track.stop());
 
-                console.error(error);
+
+        /*
+         * ========================================
+         * 2. BUAT ZXING SCANNER
+         * ========================================
+         */
+
+        codeReader =
+            new ZXingBrowser.BrowserMultiFormatReader();
+
+
+        /*
+         * ========================================
+         * 3. CARI CAMERA
+         * ========================================
+         */
+
+        const devices =
+            await ZXingBrowser.BrowserCodeReader
+                .listVideoInputDevices();
+
+        if (!devices ||
+            devices.length === 0) {
+
+            throw new Error(
+                "Tidak ada kamera yang ditemukan."
+            );
+
+        }
+
+
+        /*
+         * Prioritaskan kamera belakang
+         */
+
+        let selectedDeviceId =
+            devices[0].deviceId;
+
+        for (const device of devices) {
+
+            const label =
+                (device.label || "")
+                    .toLowerCase();
+
+            if (
+                label.includes("back") ||
+                label.includes("rear") ||
+                label.includes("environment")
+            ) {
+
+                selectedDeviceId =
+                    device.deviceId;
+
+                break;
 
             }
 
-            codeReader = null;
-
         }
+
+
+        /*
+         * ========================================
+         * 4. AKTIFKAN STATUS
+         * ========================================
+         */
+
+        scanning = true;
+
+        document.getElementById(
+            "startButton"
+        ).disabled = true;
+
+        document.getElementById(
+            "stopButton"
+        ).disabled = false;
+
+        setCameraStatus(
+            "Kamera aktif",
+            true
+        );
+
+
+        /*
+         * ========================================
+         * 5. CONTINUOUS SCANNING
+         * ========================================
+         */
 
         const video =
             document.getElementById("video");
 
-        if (video.srcObject) {
+        codeReader.decodeFromVideoDevice(
+            selectedDeviceId,
+            video,
+            (result, error) => {
 
-            video.srcObject
-                .getTracks()
-                .forEach(track => track.stop());
+                if (!scanning) {
+                    return;
+                }
 
-            video.srcObject = null;
+                if (result) {
 
-        }
+                    const barcode =
+                        result.getText();
+
+                    processBarcode(
+                        barcode
+                    );
+
+                }
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Camera error:",
+            error
+        );
+
+        scanning = false;
 
         document.getElementById(
             "startButton"
@@ -783,12 +777,130 @@
             "stopButton"
         ).disabled = true;
 
-        setCameraStatus(
-            "Kamera berhenti",
-            false
-        );
+
+        /*
+         * ========================================
+         * HANDLE PERMISSION
+         * ========================================
+         */
+
+        if (
+            error.name ===
+            "NotAllowedError"
+        ) {
+
+            setCameraStatus(
+                "Izin kamera ditolak",
+                false
+            );
+
+            alert(
+                "Izin kamera ditolak.\n\n" +
+                "Silakan izinkan akses kamera " +
+                "pada pengaturan browser, lalu " +
+                "tekan 'Mulai Scan' lagi."
+            );
+
+        }
+
+        else if (
+            error.name ===
+            "NotFoundError"
+        ) {
+
+            setCameraStatus(
+                "Kamera tidak ditemukan",
+                false
+            );
+
+            alert(
+                "Kamera tidak ditemukan."
+            );
+
+        }
+
+        else if (
+            error.name ===
+            "NotReadableError"
+        ) {
+
+            setCameraStatus(
+                "Kamera sedang digunakan",
+                false
+            );
+
+            alert(
+                "Kamera sedang digunakan oleh " +
+                "aplikasi/tab lain."
+            );
+
+        }
+
+        else {
+
+            setCameraStatus(
+                "Gagal membuka kamera",
+                false
+            );
+
+            alert(
+                "Gagal membuka kamera.\n\n" +
+                error.message
+            );
+
+        }
 
     }
+}
+
+    /*
+     * ========================================
+     * STOP SCANNER
+     * ========================================
+     */
+
+function stopScanner() {
+
+    scanning = false;
+
+    if (codeReader) {
+
+        try {
+            codeReader.reset();
+        } catch (error) {
+            console.error(error);
+        }
+
+        codeReader = null;
+    }
+
+    const video =
+        document.getElementById("video");
+
+    if (video.srcObject) {
+
+        video.srcObject
+            .getTracks()
+            .forEach(track => {
+                track.stop();
+            });
+
+        video.srcObject = null;
+    }
+
+    document.getElementById(
+        "startButton"
+    ).disabled = false;
+
+    document.getElementById(
+        "stopButton"
+    ).disabled = true;
+
+    setCameraStatus(
+        "Kamera berhenti",
+        false
+    );
+}
 
 
     /*
