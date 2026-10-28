@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <title>Scan Resi SPX — QuaggaJS</title>
+  <style>
+    :root { color-scheme: dark; --bg:#0b1020; --panel:#151c2e; --line:#2b3650; --text:#edf2ff; --muted:#aab5cc; --accent:#60a5fa; --ok:#34d399; --warn:#fbbf24; --danger:#fb7185; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--text); }
+    .wrap { width:min(1100px,100%); margin:auto; padding:16px; }
+    header { display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:16px; }
+    h1 { font-size:clamp(1.35rem,3vw,2rem); margin:0; }
+    .sub,.muted { color:var(--muted); font-size:.9rem; }
+    .layout { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr); gap:16px; }
+    .panel { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:16px; min-width:0; }
+    h2 { margin:0 0 12px; font-size:1.05rem; }
+    #scanner { width:100%; min-height:240px; aspect-ratio:4/3; background:#05070d; border-radius:12px; overflow:hidden; position:relative; }
+    #scanner video, #scanner canvas { width:100% !important; height:100% !important; object-fit:cover; }
+    #scanner canvas.drawingBuffer { position:absolute; inset:0; }
+    .scan-guide { pointer-events:none; position:absolute; inset:25% 5%; border:2px solid #60a5fa; border-radius:10px; box-shadow:0 0 0 999px #0003; }
+    .scan-guide:after { content:"Arahkan barcode 1D ke area ini"; position:absolute; bottom:-30px; left:0; right:0; text-align:center; font-size:.78rem; color:#dbeafe; text-shadow:0 1px 3px #000; }
+    .status { margin:12px 0; padding:10px 12px; background:#0d1425; border:1px solid var(--line); border-radius:10px; color:var(--muted); }
+    .status.ok { color:var(--ok); } .status.error { color:var(--danger); }
+    .controls { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    button,.file-button { border:1px solid var(--line); background:#202b42; color:var(--text); padding:10px 14px; border-radius:10px; font:inherit; cursor:pointer; }
+    button.primary { background:#2563eb; border-color:#3b82f6; } button:disabled { opacity:.45; cursor:not-allowed; }
+    input[type="search"],input[type="text"] { width:100%; min-width:0; padding:11px 12px; border-radius:10px; border:1px solid var(--line); background:#0d1425; color:var(--text); font:inherit; }
+    .latest { margin-top:14px; border:1px solid var(--line); border-radius:12px; padding:12px; }
+    .latest-code { font-size:1.15rem; font-weight:700; overflow-wrap:anywhere; }
+    .latest small { color:var(--muted); }
+    .stats { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+    .stat { flex:1; min-width:90px; background:#0d1425; border:1px solid var(--line); padding:10px; border-radius:10px; }
+    .stat strong { display:block; font-size:1.3rem; }
+    .table-wrap { overflow:auto; max-height:480px; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; font-size:.9rem; }
+    th,td { padding:10px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top; }
+    th { position:sticky; top:0; background:#202b42; }
+    td.code { overflow-wrap:anywhere; min-width:140px; }
+    .empty { padding:20px; color:var(--muted); text-align:center; }
+    .footnote { margin-top:12px; font-size:.82rem; color:var(--muted); }
+    .hidden { display:none !important; }
+    @media (max-width:760px) { .wrap{padding:12px;} .layout{grid-template-columns:1fr;} .panel{padding:12px;} #scanner{min-height:250px;} }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Scan Resi SPX</h1>
+      <div class="sub">Eksperimen scanner barcode berbasis QuaggaJS · penyimpanan lokal di perangkat</div>
+    </div>
+    <div class="sub">Butuh HTTPS atau localhost untuk akses kamera</div>
+  </header>
+
+  <div class="layout">
+    <section class="panel">
+      <h2>Scanner kamera</h2>
+      <div id="scanner" aria-label="Tampilan kamera scanner">
+        <div class="scan-guide" id="scanGuide"></div>
+      </div>
+      <div id="status" class="status" role="status">Siap. Tekan “Mulai scan” dan izinkan akses kamera.</div>
+      <div class="controls">
+        <button id="startBtn" class="primary">Mulai scan</button>
+        <button id="stopBtn" disabled>Stop</button>
+        <button id="torchBtn" disabled>Senter: tidak tersedia</button>
+      </div>
+      <div class="latest">
+        <div class="muted">Hasil scan terakhir</div>
+        <div id="latestCode" class="latest-code">Belum ada hasil</div>
+        <small id="latestMeta">Barcode yang sama tidak ditambahkan berulang kali.</small>
+      </div>
+      <p class="footnote">Tips: bersihkan lensa, pastikan seluruh lebar barcode terlihat, dekatkan kamera sampai garis hitam terlihat tajam, dan hindari pantulan cahaya. Coba putar HP ke posisi landscape untuk label yang lebar.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Riwayat scan</h2>
+      <div class="stats">
+        <div class="stat"><span class="muted">Total unik</span><strong id="totalCount">0</strong></div>
+        <div class="stat"><span class="muted">Terlihat</span><strong id="shownCount">0</strong></div>
+      </div>
+      <input id="searchInput" type="search" placeholder="Cari nomor resi..." autocomplete="off">
+      <div class="controls">
+        <button id="exportBtn" class="primary">Ekspor CSV</button>
+        <button id="copyBtn">Salin semua resi</button>
+        <button id="clearBtn">Hapus riwayat</button>
+      </div>
+      <div class="table-wrap" style="margin-top:12px">
+        <table>
+          <thead><tr><th>#</th><th>Nomor resi</th><th>Waktu scan</th></tr></thead>
+          <tbody id="historyBody"><tr><td colspan="3" class="empty">Belum ada hasil scan.</td></tr></tbody>
+        </table>
+      </div>
+      <div class="footnote">Riwayat disimpan di localStorage browser ini. Data tidak otomatis tersinkron ke perangkat lain. Ekspor CSV untuk membuat salinan.</div>
+    </section>
+  </div>
+  <p class="footnote">Catatan: ini basis migrasi awal, belum merupakan penggantian teruji atas file project lamamu. Library QuaggaJS dimuat dari CDN sehingga koneksi internet dibutuhkan saat membuka halaman.</p>
+</div>
+
+<script src="https://unpkg.com/quagga@0.12.1/dist/quagga.min.js"></script>
+<script>
+(() => {
+  "use strict";
+  const STORAGE_KEY = "spx_resi_history_v1";
+  const $ = (id) => document.getElementById(id);
+  const statusEl = $("status");
+  const startBtn = $("startBtn");
+  const stopBtn = $("stopBtn");
+  const torchBtn = $("torchBtn");
+  let running = false;
+  let initialized = false;
+  let lastAcceptedCode = "";
+  let lastAcceptedAt = 0;
+  let torchOn = false;
+  let detectedHandler = null;
+
+  function setStatus(message, type = "") {
+    statusEl.textContent = message;
+    statusEl.className = "status" + (type ? " " + type : "");
+  }
+  function loadHistory() {
+    try {
+      const value = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      return Array.isArray(value) ? value.filter(x => x && typeof x.code === "string") : [];
+    } catch (_) { return []; }
+  }
+  function saveHistory(items) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); }
+    catch (_) { setStatus("Penyimpanan browser penuh atau diblokir. Ekspor CSV agar data aman.", "error"); }
+  }
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, ch => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[ch]));
+  }
+  function renderHistory() {
+    const items = loadHistory();
+    const query = $("searchInput").value.trim().toLowerCase();
+    const filtered = items.filter(item => item.code.toLowerCase().includes(query));
+    $("totalCount").textContent = String(items.length);
+    $("shownCount").textContent = String(filtered.length);
+    const body = $("historyBody");
+    if (!filtered.length) {
+      body.innerHTML = `<tr><td colspan="3" class="empty">${query ? "Tidak ada resi yang cocok." : "Belum ada hasil scan."}</td></tr>`;
+      return;
+    }
+    body.innerHTML = filtered.map((item, index) =>
+      `<tr><td>${index + 1}</td><td class="code">${escapeHtml(item.code)}</td><td>${escapeHtml(item.time || "")}</td></tr>`
+    ).join("");
+  }
+  function addCode(code, format = "unknown") {
+    code = String(code || "").trim();
+    if (!code) return;
+    const now = Date.now();
+    // Quagga may emit the same code on consecutive frames; ignore repeats.
+    if (code === lastAcceptedCode && now - lastAcceptedAt < 1800) return;
+    lastAcceptedCode = code;
+    lastAcceptedAt = now;
+
+    const items = loadHistory();
+    const existing = items.some(item => item.code === code);
+    $("latestCode").textContent = code;
+    $("latestMeta").textContent = existing
+      ? "Sudah ada di riwayat · format: " + format
+      : "Tersimpan · format: " + format + " · " + new Date().toLocaleString("id-ID");
+    if (!existing) {
+      items.unshift({ code, format, time: new Date().toLocaleString("id-ID") });
+      saveHistory(items);
+      renderHistory();
+      setStatus("Barcode berhasil dibaca dan ditambahkan ke riwayat.", "ok");
+      if (navigator.vibrate) navigator.vibrate(70);
+    } else {
+      setStatus("Barcode terbaca, tetapi sudah tercatat sebelumnya.", "ok");
+    }
+  }
+  function getReaderConfig() {
+    const cores = Number(navigator.hardwareConcurrency || 2);
+    return {
+      numOfWorkers: Math.max(0, Math.min(2, cores - 1)),
+      locate: true,
+      frequency: 10,
+      inputStream: {
+        name: "Live",
+        type: "LiveStream",
+        target: $("scanner"),
+        constraints: {
+          facingMode: { ideal: "environment" },
+          width: { ideal: 1920 },
+          height: { ideal: 1080 }
+        }
+      },
+      locator: { halfSample: false, patchSize: "large" },
+      decoder: { readers: ["code_128_reader"], multiple: false },
+      locate: true
+    };
+  }
+  function updateTorchButton() {
+    try {
+      const track = Quagga.CameraAccess && Quagga.CameraAccess.getActiveTrack();
+      const caps = track && track.getCapabilities ? track.getCapabilities() : {};
+      const supported = !!(caps && caps.torch);
+      torchBtn.disabled = !running || !supported;
+      torchBtn.textContent = supported ? ("Senter: " + (torchOn ? "nyala" : "mati")) : "Senter: tidak tersedia";
+    } catch (_) {
+      torchBtn.disabled = true;
+      torchBtn.textContent = "Senter: tidak tersedia";
+    }
+  }
+  function onDetected(result) {
+    if (result && result.codeResult && result.codeResult.code) {
+      addCode(result.codeResult.code, result.codeResult.format || "unknown");
+    }
+  }
+  function startScanner() {
+    if (running) return;
+    if (!window.Quagga) {
+      setStatus("QuaggaJS gagal dimuat. Periksa koneksi internet atau CDN.", "error");
+      return;
+    }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setStatus("Browser ini tidak menyediakan akses kamera. Gunakan Chrome/Firefox modern melalui HTTPS atau localhost.", "error");
+      return;
+    }
+    startBtn.disabled = true;
+    setStatus("Meminta izin kamera dan menyiapkan scanner...");
+    const config = getReaderConfig();
+    Quagga.init(config, function(err) {
+      if (err) {
+        console.error(err);
+        startBtn.disabled = false;
+        setStatus("Tidak bisa memulai kamera: " + (err.message || err) + ". Pastikan izin kamera aktif dan halaman memakai HTTPS.", "error");
+        return;
+      }
+      initialized = true;
+      running = true;
+      Quagga.start();
+      if (detectedHandler) Quagga.offDetected(detectedHandler);
+      detectedHandler = onDetected;
+      Quagga.onDetected(detectedHandler);
+      startBtn.disabled = true;
+      stopBtn.disabled = false;
+      setStatus("Scanner aktif. Arahkan barcode Code 128 ke kamera.");
+      updateTorchButton();
+    });
+  }
+  function stopScanner() {
+    if (window.Quagga && (running || initialized)) {
+      try { Quagga.stop(); } catch (_) {}
+      if (detectedHandler) {
+        try { Quagga.offDetected(detectedHandler); } catch (_) {}
+      }
+    }
+    running = false;
+    initialized = false;
+    torchOn = false;
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+    torchBtn.disabled = true;
+    torchBtn.textContent = "Senter: tidak tersedia";
+    setStatus("Scanner dihentikan.");
+  }
+  async function toggleTorch() {
+    try {
+      const track = Quagga.CameraAccess.getActiveTrack();
+      if (!track) throw new Error("Kamera aktif tidak ditemukan");
+      torchOn = !torchOn;
+      await track.applyConstraints({ advanced: [{ torch: torchOn }] });
+      updateTorchButton();
+    } catch (err) {
+      torchOn = false;
+      setStatus("Senter tidak didukung oleh kamera/browser ini.", "error");
+      updateTorchButton();
+    }
+  }
+  function exportCsv() {
+    const items = loadHistory();
+    if (!items.length) { setStatus("Belum ada data untuk diekspor."); return; }
+    const quote = v => '"' + String(v ?? "").replace(/"/g, '""') + '"';
+    const csv = "\uFEFF" + ["Nomor Resi,Format,Waktu Scan", ...items.map(x => [x.code, x.format, x.time].map(quote).join(","))].join("\r\n");
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
+    const a = document.createElement("a");
+    a.href = url; a.download = "scan-resi-spx-" + new Date().toISOString().slice(0,10) + ".csv";
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    setStatus("File CSV dibuat.");
+  }
+  async function copyAll() {
+    const text = loadHistory().map(x => x.code).join("\n");
+    if (!text) { setStatus("Belum ada resi untuk disalin."); return; }
+    try {
+      await navigator.clipboard.writeText(text);
+      setStatus("Semua nomor resi disalin ke clipboard.", "ok");
+    } catch (_) {
+      setStatus("Clipboard tidak tersedia. Gunakan Ekspor CSV.", "error");
+    }
+  }
+
+  startBtn.addEventListener("click", startScanner);
+  stopBtn.addEventListener("click", stopScanner);
+  torchBtn.addEventListener("click", toggleTorch);
+  $("searchInput").addEventListener("input", renderHistory);
+  $("exportBtn").addEventListener("click", exportCsv);
+  $("copyBtn").addEventListener("click", copyAll);
+  $("clearBtn").addEventListener("click", () => {
+    if (!loadHistory().length) return;
+    if (confirm("Hapus semua riwayat scan dari browser ini? Tindakan ini tidak bisa dibatalkan.")) {
+      localStorage.removeItem(STORAGE_KEY);
+      $("latestCode").textContent = "Belum ada hasil";
+      $("latestMeta").textContent = "Barcode yang sama tidak ditambahkan berulang kali.";
+      renderHistory();
+      setStatus("Riwayat dihapus.");
+    }
+  });
+  window.addEventListener("beforeunload", stopScanner);
+  renderHistory();
+})();
+</script>
+</body>
+</html>
